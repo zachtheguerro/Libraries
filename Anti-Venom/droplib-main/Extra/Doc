@@ -1,0 +1,46 @@
+--Start Lib
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/zachtheguerro/droplib/main/Lib"))();
+
+--New WIndow
+local MainWindow = Library:CreateWindow("Main");
+
+--New Folder
+local Folder = MainWindow:AddFolder("Combat");
+
+--New Toggle
+Folder:AddToggle({text = "Toggle", flag = "", state = false, callback = function(Bool)
+
+end})
+
+--New Bind
+Folder:AddBind({text = "KeyBind", flag = "", key = Enum.UserInputType.MouseButton2, hold = true, callback = function(Bool)
+
+end})
+
+--New Dropdown
+Folder:AddList({text = "Dropdown", flag = "", values = {"cool", "bad"}, callback = function(Option)
+
+end})
+
+--New Slider
+Folder:AddSlider({text = "Slider", flag = "", min = 12, max = 42, float = 1, value = nil, callback = function(Value)
+
+end})
+
+--New ColorPicker
+Folder:AddColor({text = "Color", flag = "", color = Color3.fromRGB(255, 255, 255), callback = function(Color)
+
+end})
+
+--New TextBox
+Folder:AddBox({text = "TextBox", value = "", callback = function(Text)
+
+end})
+
+--New Button
+Folder:AddButton({text = "Button", callback = function()
+
+end})
+
+--Init (Needed)
+Library:Init()

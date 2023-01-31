@@ -1,0 +1,72 @@
+--New UI
+Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/zachtheguerro/Anti-Venom/main/Lib"))({
+    Title = 'Anti',
+    Domain = '-Venom',
+    Game = '',
+    FileType = '.txt'
+})
+
+flags = Library.flags
+Options = Library.options
+Utility = Library.utility
+Library:init()
+
+--Hidden Functions (needed)
+if not LPH_OBFUSCATED and not LPH_JIT_ULTRA then
+    LPH_JIT_ULTRA = function(f) return f end
+    LPH_JIT_MAX = function(f) return f end
+    LPH_JIT = function(f) return f end
+    LPH_ENCSTR = function(s) return s end
+    LPH_STRENC = function(s) return s end
+    LPH_CRASH = function() while true do end return end
+end
+
+--New window
+local Utility, Window, Tabs, Sections, Settings = Library.utility, nil, {}, {}, nil; do
+    -- Put your tabs and sections in here
+    Window = Library.NewWindow({size = UDim2.new(0, 500, 0, 600)})
+    --New Tab
+    Combat = Window:AddTab("Combat")
+    
+    --Settings tab (needed)
+    Settings = Library:CreateSettingsTab(Window)
+    
+    --New Section (1 left 2 right)
+    Aimbotsection = Combat:AddSection("Aimbot", 1)
+
+end
+
+--New Button
+Aimbotsection:AddButton({text = "Button", risky = false, callback = function()
+
+end});
+
+--New Toggle
+Aimbotsection:AddToggle({text = "Toggle", tooltip = "", flag = "", enabled = true, risky = false, callback = function(State)
+
+end})
+
+--New Slider
+Aimbotsection:AddSlider({text = "Slider", flag = "", enabled = true, suffix = "", min = 1, max = 5000, value = 1000, risky = false, increment = 1, callback = function(Value)
+
+end})
+
+--New Dropdown
+Aimbotsection:AddList({text = "Dropdown", flag = "",  enabled = true, tooltip = "", selected = "", values = {"", ""}, risky = false, multi = false, callback = function(Option)
+
+end})
+
+--New KeyBind
+Aimbotsection:AddBind({text = "KeyBind", flag = "", enabled = true, tooltip = "", mode = "toggle", risky = false, callback = function(State)
+
+end});
+
+--New TextBox
+Aimbotsection:AddBox({text = "TextBox", flag = "", enabled = true, input = "", risky = false, callback = function(Text)
+
+end});
+
+--New ColorPicker
+Aimbotsection:AddColor({text = "ColorPicker", flag = "", enabled = true, color = Color3.fromRGB(40, 252, 3), risky = false, callback = function(Color)
+
+end});

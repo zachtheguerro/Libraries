@@ -1,0 +1,34 @@
+--Make something visible or not
+    Options.what_u_want_to_be_visible_or_not.enabled = State
+    Options.toggle_flag_or_list_flag:UpdateOptions()
+    section_name:UpdateSections()
+
+--Hidden Functions
+if not LPH_OBFUSCATED and not LPH_JIT_ULTRA then
+    LPH_JIT_ULTRA = function(f) return f end
+    LPH_JIT_MAX = function(f) return f end
+    LPH_JIT = function(f) return f end
+    LPH_ENCSTR = function(s) return s end
+    LPH_STRENC = function(s) return s end
+    LPH_CRASH = function() while true do end return end
+end
+
+--Unload Function
+Utility:Connection(Library.unloaded, LPH_JIT_MAX(function()
+
+end))
+
+--Divider
+Aimbotsection:AddSeparator({text = 'seperator'})
+
+--Text
+Aimbotsection:AddText({text = "", flag = "", enabled = true})
+
+--Notification
+Library:SendNotification("Notification", 5--[[, Color3.fromRGB(0,0,0)]]);
+
+--Change ESP Models
+local chars_upvalue = getupvalue(getrenv()._G.Player.GetPlayerModel, 1)
+
+--Add a value to something
+Options.List:AddValue("Option")
