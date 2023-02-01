@@ -34,9 +34,9 @@ local library = {
     ended = {},
     colors = {},
     folders = {
-        main = "zephyrus",
-        assets = "zephyrus/assets",
-        configs = "zephyrus/configs"
+        main = "floyd",
+        assets = "floyd/assets",
+        configs = "floyd/configs"
     },
     shared = {
         initialized = false,
