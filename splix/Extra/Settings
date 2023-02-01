@@ -1,5 +1,6 @@
-function LoadConfigSettings(Page)
-    local settings_page = Page:Page({name = "configuration"})
+local Config = {}
+function Config:LoadConfigSettings(Menu)
+    local settings_page = Menu:Page({name = "configuration"})
     do
         local menu_section = settings_page:Section({name = "menu", side = "Left"})
         do
