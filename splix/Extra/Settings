@@ -1,5 +1,3 @@
-local Config = {}
-function Config:LoadConfigSettings(Menu)
     local settings_page = Menu:Page({name = "configuration"})
     do
         local menu_section = settings_page:Section({name = "menu", side = "Left"})
@@ -442,4 +440,3 @@ function Config:LoadConfigSettings(Menu)
             update_config_list()
         end
     end
-end
