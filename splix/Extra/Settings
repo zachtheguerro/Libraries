@@ -381,7 +381,7 @@
                     reset_on_focus = false
                 }
             )
-            config_section:Multibutton(
+            config_section:ButtonHolder(
                 {
                     buttons = {
                         {
@@ -408,7 +408,7 @@
                     }
                 }
             )
-            config_section:Multibutton(
+            config_section:ButtonHolder(
                 {
                     buttons = {
                         {
