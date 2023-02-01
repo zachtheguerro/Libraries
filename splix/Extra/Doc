@@ -20,3 +20,5 @@ section:Multibox({Name = "", Minimum = 1, Options = {"1", "2", "3"}, Default = {
 section:Button({Name = "", Confirmation = false, Callback = function() end})
 section:Multibutton({Buttons = {{"1", function() end}, {"2", function() end}}})
 section:Label({Name = "", Middle = true, Pointer = ""})
+
+pointers[""]:get()
