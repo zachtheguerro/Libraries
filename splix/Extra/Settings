@@ -1,4 +1,5 @@
-    local settings_page = Window:Page({name = "configuration"})
+function LoadConfigSettings(Page)
+    local settings_page = Page:Page({name = "configuration"})
     do
         local menu_section = settings_page:Section({name = "menu", side = "Left"})
         do
@@ -440,3 +441,4 @@
             update_config_list()
         end
     end
+end3
