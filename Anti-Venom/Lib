@@ -254,7 +254,7 @@ library.themes = {
     }
 }
 
-library.signal = loadstring(game:HttpGetAsync('https://raw.githubusercontent.com/zachtheguerro/Anti-Venom/main/Other/Signal.lua'))();
+library.signal = loadstring(game:HttpGetAsync('https://raw.githubusercontent.com/zachtheguerro/Libraries/main/Anti-Venom/Other/Signal.lua'))();
 
 local blacklistedKeys = {
 	Enum.KeyCode.Unknown,
