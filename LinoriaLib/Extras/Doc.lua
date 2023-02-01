@@ -1,5 +1,5 @@
 --New Window:
-repo = 'https://raw.githubusercontent.com/zachisfunny/LinoriaLib/main/'
+repo = 'https://raw.githubusercontent.com/zachtheguerro/Libraries/main/LinoriaLib/'
 
 local Library = loadstring(game:HttpGet(repo .. 'Library.lua'))()
 local ThemeManager = loadstring(game:HttpGet(repo .. 'addons/ThemeManager.lua'))()
