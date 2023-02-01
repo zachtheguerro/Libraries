@@ -797,7 +797,7 @@ do
                 library.shared.ping = stats.Network:FindFirstChild("ServerStatsItem") and tostring(math.floor(stats.Network.ServerStatsItem["Data Ping"]:GetValue())) or "Unknown"
                 --
                 if (tick() - Tick) > 0.15 then
-                    watermark_title.Text = string.format("zephyrus | %s ms | %u fps", library.shared.ping, library.shared.fps)
+                    watermark_title.Text = string.format("floyd solutions | %s ms | %u fps", library.shared.ping, library.shared.fps)
                     window.watermark:UpdateSize()
                     --
                     Tick = tick()
