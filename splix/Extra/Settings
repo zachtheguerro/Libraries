@@ -1,4 +1,4 @@
-    local settings_page = Menu:Page({name = "configuration"})
+    local settings_page = Window:Page({name = "configuration"})
     do
         local menu_section = settings_page:Section({name = "menu", side = "Left"})
         do
