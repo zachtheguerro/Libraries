@@ -3,7 +3,7 @@
         local menu_section = settings_page:Section({name = "menu", side = "Left"})
         do
             menu_section:Keybind(
-                {pointer = "settings/menu/bind", name = "toggle", default = Enum.KeyCode.Home, callback = function(p_state)
+                {pointer = "settings/menu/bind", name = "toggle", default = Enum.KeyCode.End, callback = function(p_state)
                         Window.uibind = p_state
                     end}
             )
