@@ -442,4 +442,4 @@ function Config:LoadConfigSettings(Menu)
             update_config_list()
         end
     end
-end3
+end
