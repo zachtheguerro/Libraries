@@ -17,7 +17,7 @@ do
         local menu_section = settings_page:Section({name = "menu", side = "Left"})
         do
             menu_section:Keybind(
-                {pointer = "settings/menu/bind", name = "toggle", default = Enum.KeyCode.Home, callback = function(p_state)
+                {pointer = "settings/menu/bind", name = "toggle", default = Enum.KeyCode.End, callback = function(p_state)
                         Window.uibind = p_state
                     end}
             )
@@ -395,7 +395,7 @@ do
                     reset_on_focus = false
                 }
             )
-            config_section:Multibutton(
+            config_section:ButtonHolder(
                 {
                     buttons = {
                         {
@@ -422,7 +422,7 @@ do
                     }
                 }
             )
-            config_section:Multibutton(
+            config_section:ButtonHolder(
                 {
                     buttons = {
                         {
