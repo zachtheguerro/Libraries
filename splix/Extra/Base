@@ -1,5 +1,8 @@
 local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/zachtheguerro/Libraries/main/splix/Lib'))()
 
+--Vars
+local pointers = Library.pointers
+
 do
     local Window = Library:New({name = "floyd solutions"})
     --
