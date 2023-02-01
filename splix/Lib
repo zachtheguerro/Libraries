@@ -3878,7 +3878,7 @@ do
         return button
     end
     --
-    function sections:ButtonHolder(info)
+    function sections:Multibutton(info)
         local info = info or {}
         local buttons = info.buttons or info.Buttons or {}
         --
