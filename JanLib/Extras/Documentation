@@ -1,5 +1,5 @@
 --New UI:
-loadstring(game:HttpGet('https://raw.githubusercontent.com/zachisfunny/JanLib/main/Lib'))()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/zachtheguerro/Libraries/main/JanLib/Lib'))()
 
 --New Tab:
 local Tab = library:AddTab("Tab"); 
