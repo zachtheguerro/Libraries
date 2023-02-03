@@ -34,9 +34,9 @@ local library = {
     ended = {},
     colors = {},
     folders = {
-        main = "zephyrus",
-        assets = "zephyrus/assets",
-        configs = "zephyrus/configs"
+        main = "gamewiz",
+        assets = "gamewiz/assets",
+        configs = "gamewiz/configs"
     },
     shared = {
         initialized = false,
