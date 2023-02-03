@@ -2,7 +2,7 @@
     do
         local menu_section = settings_page:Section({name = "menu", side = "Left"})
         do
-            menu_section:Keybind({pointer = "settings/menu/bind", name = "toggle", default = Enum.KeyCode.End, callback = function(p_state) Window.uibind = p_state end})
+            menu_section:Keybind({pointer = "settings/menu/bind", name = "toggle", default = nil, callback = function(p_state) Window.uibind = p_state end})
             menu_section:Toggle({pointer = "settings/menu/watermark", name = "watermark", callback = function(p_state) Window.watermark:Update("Visible", p_state) end})
             menu_section:Toggle({pointer = "settings/menu/keybind_list", name = "keybind list", callback = function(p_state) Window.keybindslist:Update("Visible", p_state) end})
         end
