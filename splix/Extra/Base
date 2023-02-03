@@ -4,11 +4,11 @@ local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/zacht
 local pointers = Library.pointers
 
 do
-    local Window = Library:New({name = "floyd solutions"})
+    local Window = Library:New({Name = "floyd solutions"})
     --
-    local Main = Window:Page({name = "Main"})
+    local Main = Window:Page({Name = "Main"})
 
-    local Mainsection = Main:Section({name = "Main"})
+    local Mainsection = Main:Section({Name = "Main", Side = "Left"})
     
     
     
