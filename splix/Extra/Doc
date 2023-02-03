@@ -11,7 +11,7 @@ local Mainsection = Main:Section({name = "Main"})
 
 section:Toggle({Name = "", Default = false, Pointer = "", Callback = function(v) end})
 section:Keybind({Name = "", Default = "", Pointer = "", Mode = "", KeybindName = "", Callback = function(v) end})
-section:Slider({Name = "", Minimum = 1, Maximum = 100, Default = 50, Decimals = 1.0, Pointer = "", Callback = function(v) end})
+section:Slider({Name = "", Minimum = 1, Maximum = 100, Default = 50, Decimals = 1.0, Suffis = "", Pointer = "", Callback = function(v) end})
 section:Colorpicker({Name = "", Info = "", Alpha = 0.25, Default = Color3.fromRGB(255, 255, 255), Pointer = "", Callback = function(v) end})
 section:Textbox({Pointer = "", PlaceHolder = "", Text = "", Middle = true, ResetOnFocus = false})
 section:Listbox({Pointer = "", List = {"1", "2", "3"}, Callback = function(v) end})
@@ -22,5 +22,3 @@ section:ButtonHolder({Buttons = {{"1", function() end}, {"2", function() end}}})
 section:Label({Name = "", Middle = true, Pointer = ""})
 
 Window:Initialize()
-
-pointers[""]:get()
