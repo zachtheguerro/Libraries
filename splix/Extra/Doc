@@ -3,11 +3,11 @@ local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/zacht
 --Vars
 local pointers = Library.pointers
 
-local Window = Library:New({name = "floyd solutions"})
+local Window = Library:New({Name = "floyd solutions"})
 --
-local Main = Window:Page({name = "Main"})
+local Main = Window:Page({Name = "Main"})
 
-local Mainsection = Main:Section({name = "Main"})
+local Mainsection = Main:Section({Name = "Main", Side = "Left"})
 
 section:Toggle({Name = "", Default = false, Pointer = "", Callback = function(v) end})
 section:Keybind({Name = "", Default = "", Pointer = "", Mode = "", KeybindName = "", Callback = function(v) end})
