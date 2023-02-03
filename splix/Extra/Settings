@@ -2,21 +2,9 @@
     do
         local menu_section = settings_page:Section({name = "menu", side = "Left"})
         do
-            menu_section:Keybind(
-                {pointer = "settings/menu/bind", name = "toggle", default = Enum.KeyCode.End, callback = function(p_state)
-                        Window.uibind = p_state
-                    end}
-            )
-            menu_section:Toggle(
-                {pointer = "settings/menu/watermark", name = "watermark", callback = function(p_state)
-                        Window.watermark:Update("Visible", p_state)
-                    end}
-            )
-            menu_section:Toggle(
-                {pointer = "settings/menu/keybind_list", name = "keybind list", callback = function(p_state)
-                        Window.keybindslist:Update("Visible", p_state)
-                    end}
-            )
+            menu_section:Keybind({pointer = "settings/menu/bind", name = "toggle", default = Enum.KeyCode.End, callback = function(p_state) Window.uibind = p_state end})
+            menu_section:Toggle({pointer = "settings/menu/watermark", name = "watermark", callback = function(p_state) Window.watermark:Update("Visible", p_state) end})
+            menu_section:Toggle({pointer = "settings/menu/keybind_list", name = "keybind list", callback = function(p_state) Window.keybindslist:Update("Visible", p_state) end})
         end
         local menu_theme = settings_page:Section({name = "theme", side = "Left"})
         do
@@ -223,118 +211,17 @@
             for i, v in next, themes do
                 table.insert(themeStrings, i)
             end
-            menu_theme:Dropdown(
-                {pointer = "settings/menu/theme", name = "theme", options = themeStrings, default = "Default"}
-            )
-            menu_theme:Button(
-                {
-                    name = "load",
-                    callback = function()
-                        local selected_theme = Library.pointers["settings/menu/theme"]:get()
-                        if selected_theme then
-                            Library.pointers["settings/menu/accent"]:set(themes[selected_theme].accent)
-                            Library.pointers["settings/menu/lightcontrast"]:set(themes[selected_theme].lightcontrast)
-                            Library.pointers["settings/menu/darkcontrast"]:set(themes[selected_theme].darkcontrast)
-                            Library.pointers["settings/menu/outline"]:set(themes[selected_theme].outline)
-                            Library.pointers["settings/menu/inline"]:set(themes[selected_theme].inline)
-                            Library.pointers["settings/menu/textcolor"]:set(themes[selected_theme].textcolor)
-                            Library.pointers["settings/menu/riskytextcolor"]:set(themes[selected_theme].riskytext)
-                            Library.pointers["settings/menu/textborder"]:set(themes[selected_theme].textborder)
-                            Library.pointers["settings/menu/cursoroutline"]:set(themes[selected_theme].cursoroutline)
-                        end
-                    end
-                }
-            )
-            menu_theme:Colorpicker(
-                {
-                    pointer = "settings/menu/accent",
-                    name = "accent",
-                    default = Color3.fromRGB(55, 175, 225),
-                    callback = function(p_state)
-                        Library:UpdateColor("Accent", p_state)
-                    end
-                }
-            )
-            menu_theme:Colorpicker(
-                {
-                    pointer = "settings/menu/lightcontrast",
-                    name = "light contrast",
-                    default = Color3.fromRGB(30, 30, 30),
-                    callback = function(p_state)
-                        Library:UpdateColor("LightContrast", p_state)
-                    end
-                }
-            )
-            menu_theme:Colorpicker(
-                {
-                    pointer = "settings/menu/darkcontrast",
-                    name = "dark contrast",
-                    default = Color3.fromRGB(25, 25, 25),
-                    callback = function(p_state)
-                        Library:UpdateColor("DarkContrast", p_state)
-                    end
-                }
-            )
-            menu_theme:Colorpicker(
-                {
-                    pointer = "settings/menu/outline",
-                    name = "outline",
-                    default = Color3.fromRGB(0, 0, 0),
-                    callback = function(p_state)
-                        Library:UpdateColor("Outline", p_state)
-                    end
-                }
-            )
-            menu_theme:Colorpicker(
-                {
-                    pointer = "settings/menu/inline",
-                    name = "inline",
-                    default = Color3.fromRGB(50, 50, 50),
-                    callback = function(p_state)
-                        Library:UpdateColor("Inline", p_state)
-                    end
-                }
-            )
-            menu_theme:Colorpicker(
-                {
-                    pointer = "settings/menu/textcolor",
-                    name = "text color",
-                    default = Color3.fromRGB(255, 255, 255),
-                    callback = function(p_state)
-                        Library:UpdateColor("TextColor", p_state)
-                    end
-                }
-            )
-            menu_theme:Colorpicker(
-                {
-                    pointer = "settings/menu/textborder",
-                    name = "text outline",
-                    default = Color3.fromRGB(0, 0, 0),
-                    callback = function(p_state)
-                        Library:UpdateColor("TextBorder", p_state)
-                    end
-                }
-            )
-            menu_theme:Colorpicker(
-                {
-                    pointer = "settings/menu/riskytextcolor",
-                    name = "risky text color",
-                    default = Color3.new(1, 1, 0.5),
-                    callback = function(p_state)
-                        Library:UpdateColor("riskytext", p_state)
-                    end
-                }
-            )
-            menu_theme:Colorpicker(
-                {
-                    pointer = "settings/menu/cursoroutline",
-                    name = "cursor outline",
-                    default = Color3.fromRGB(10, 10, 10),
-                    callback = function(p_state)
-                        Library:UpdateColor("CursorOutline", p_state)
-                    end
-                }
-            )
+            menu_theme:Dropdown({pointer = "settings/menu/theme", name = "theme", options = themeStrings, default = "Default"})
+            menu_theme:Button({name = "load", callback = function() local selected_theme = Library.pointers["settings/menu/theme"]:get() if selected_theme then Library.pointers["settings/menu/accent"]:set(themes[selected_theme].accent) Library.pointers["settings/menu/lightcontrast"]:set(themes[selected_theme].lightcontrast) Library.pointers["settings/menu/darkcontrast"]:set(themes[selected_theme].darkcontrast) Library.pointers["settings/menu/outline"]:set(themes[selected_theme].outline) Library.pointers["settings/menu/inline"]:set(themes[selected_theme].inline) Library.pointers["settings/menu/textcolor"]:set(themes[selected_theme].textcolor) Library.pointers["settings/menu/riskytextcolor"]:set(themes[selected_theme].riskytext) Library.pointers["settings/menu/textborder"]:set(themes[selected_theme].textborder) Library.pointers["settings/menu/cursoroutline"]:set(themes[selected_theme].cursoroutline) end end})
+            menu_theme:Colorpicker({pointer = "settings/menu/accent", name = "accent", default = Color3.fromRGB(55, 175, 225), callback = function(p_state) Library:UpdateColor("Accent", p_state) end})
+            menu_theme:Colorpicker({pointer = "settings/menu/lightcontrast", name = "light contrast", default = Color3.fromRGB(30, 30, 30), callback = function(p_state) Library:UpdateColor("LightContrast", p_state) end})
+            menu_theme:Colorpicker({pointer = "settings/menu/darkcontrast", name = "dark contrast", default = Color3.fromRGB(25, 25, 25), callback = function(p_state) Library:UpdateColor("DarkContrast", p_state) end})
+            menu_theme:Colorpicker({pointer = "settings/menu/outline", name = "outline", default = Color3.fromRGB(0, 0, 0), callback = function(p_state) Library:UpdateColor("Outline", p_state) end})
+            menu_theme:Colorpicker({pointer = "settings/menu/inline", name = "inline", default = Color3.fromRGB(50, 50, 50), callback = function(p_state) Library:UpdateColor("Inline", p_state) end})
+            menu_theme:Colorpicker({pointer = "settings/menu/textcolor", name = "text color", default = Color3.fromRGB(255, 255, 255), callback = function(p_state) Library:UpdateColor("TextColor", p_state) end})
+            menu_theme:Colorpicker({pointer = "settings/menu/textborder", name = "text outline", default = Color3.fromRGB(0, 0, 0), callback = function(p_state) Library:UpdateColor("TextBorder", p_state) end})
+            menu_theme:Colorpicker({pointer = "settings/menu/riskytextcolor", name = "risky text color", default = Color3.new(1, 1, 0.5), callback = function(p_state) Library:UpdateColor("riskytext", p_state) end})
+            menu_theme:Colorpicker({pointer = "settings/menu/cursoroutline", name = "cursor outline", default = Color3.fromRGB(10, 10, 10), callback = function(p_state) Library:UpdateColor("CursorOutline", p_state) end})
             Library.pointers["settings/menu/accent"]:set(themes["Default"].accent)
             Library.pointers["settings/menu/lightcontrast"]:set(themes["Default"].lightcontrast)
             Library.pointers["settings/menu/darkcontrast"]:set(themes["Default"].darkcontrast)
@@ -372,71 +259,10 @@
             end
     
             config_section:Listbox({pointer = "settings/configuration/list"})
-            config_section:Textbox(
-                {
-                    pointer = "settings/configuration/name",
-                    placeholder = "config name",
-                    text = "",
-                    middle = true,
-                    reset_on_focus = false
-                }
-            )
-            config_section:ButtonHolder(
-                {
-                    buttons = {
-                        {
-                            "create",
-                            function()
-                                local config_name = Library.pointers["settings/configuration/name"]:get()
-                                if config_name == "" or isfile("floyd/configs/" .. config_name .. ".txt") then
-                                    return
-                                end
-                                writefile("floyd/configs/" .. config_name .. ".txt", "")
-                                update_config_list()
-                            end
-                        },
-                        {
-                            "delete",
-                            function()
-                                local selected_config = Library.pointers["settings/configuration/list"]:get()[1][1]
-                                if selected_config then
-                                    delfile("floyd/configs/" .. selected_config .. ".txt")
-                                    update_config_list()
-                                end
-                            end
-                        }
-                    }
-                }
-            )
-            config_section:ButtonHolder(
-                {
-                    buttons = {
-                        {
-                            "load",
-                            function()
-                                local selected_config = Library.pointers["settings/configuration/list"]:get()[1][1]
-                                if selected_config then
-                                    Window:LoadConfig(readfile("floyd/configs/" .. selected_config .. ".txt"))
-                                end
-                            end
-                        },
-                        {
-                            "save",
-                            function()
-                                local selected_config = Library.pointers["settings/configuration/list"]:get()[1][1]
-                                if selected_config then
-                                    writefile("floyd/configs/" .. selected_config .. ".txt", Window:GetConfig())
-                                end
-                            end
-                        }
-                    }
-                }
-            )
-            config_section:Button(
-                {name = "refresh", callback = function()
-                        update_config_list()
-                    end}
-            )
+            config_section:Textbox({pointer = "settings/configuration/name", placeholder = "config name", text = "", middle = true, reset_on_focus = false })
+            config_section:ButtonHolder({buttons = {{"create", function() local config_name = Library.pointers["settings/configuration/name"]:get() if config_name == "" or isfile("floyd/configs/" .. config_name .. ".txt") then return; end writefile("floyd/configs/" .. config_name .. ".txt", "") update_config_list() end}, {"delete", function() local selected_config = Library.pointers["settings/configuration/list"]:get()[1][1] if selected_config then delfile("floyd/configs/" .. selected_config .. ".txt") update_config_list() end end}}})
+            config_section:ButtonHolder({buttons = {{"load", function() local selected_config = Library.pointers["settings/configuration/list"]:get()[1][1] if selected_config then Window:LoadConfig(readfile("floyd/configs/" .. selected_config .. ".txt")) end end}, {"save", function() local selected_config = Library.pointers["settings/configuration/list"]:get()[1][1] if selected_config then writefile("floyd/configs/" .. selected_config .. ".txt", Window:GetConfig()) end end}}})
+            config_section:Button( {name = "refresh", callback = function() update_config_list() end})
             update_config_list()
         end
     end
