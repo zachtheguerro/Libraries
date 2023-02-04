@@ -22,3 +22,7 @@ section:ButtonHolder({Buttons = {{"1", function() end}, {"2", function() end}}})
 section:Label({Name = "", Middle = true, Pointer = ""})
 
 Window:Initialize()
+
+pointers[""]:get()
+pointers["keybind"]:is_active()
+table.find(pointers["multibox"]:get(), "what_u_want")
