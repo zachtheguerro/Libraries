@@ -1,0 +1,82 @@
+                    content = {
+                        {
+                            type = "toggle",
+                            name = "Toggle",
+                            value = false,
+                        },
+						{
+							type = "toggle",
+							name = "Toggle w CP",
+							value = false,
+							unsafe = false,
+							extra = {
+								type = "single colorpicker",
+								name = "",
+								color = { 255, 255, 255, 90 },
+							},
+						},
+						{
+							type = "toggle",
+							name = "Toggle w 2 CP",
+							value = false,
+							unsafe = false,
+							extra = {
+								type = "double colorpicker",
+								name = { "", "" },
+								color = { { 255, 255, 255 }, { 255, 255, 255 } },
+							},
+						},
+						{
+							type = "toggle",
+							name = "Toggle w KB",
+							value = false,
+							extra = {
+								type = "keybind",
+								key = nil,
+								toggletype = 1,
+							},
+						},
+						{
+    						type = "slider",
+    						name = "Slider",
+    						value = 0,
+    						minvalue = 0,
+    						maxvalue = 100,
+    						stradd = "",
+    						custom = { [0] = "0" },
+    					},
+						{
+							type = "dropbox",
+							name = "Dropbox",
+							value = 1,
+							values = { "1", "2", "3"},
+						},
+						{
+    						type = "combobox",
+    						name = "Combobox",
+    						values = { { "1", true }, { "2", true }, { "3", false }},
+    					},
+						{
+							type = "button",
+							name = "Button",
+							doubleclick = true,
+						},
+						{
+							type = "textbox",
+							name = "Textbox",
+							text = "",
+						},
+					},
+          
+          menu:GetVal("Tab", "Section", "Option")
+          menu:GetKey("Tab", "Section", "Option")
+
+          if table.find(menu.friends, v.Name) then
+              continue
+          end
+
+          if priority_only and not table.find(menu.priority, v.Name) then
+              continue
+          end
+          
+          
