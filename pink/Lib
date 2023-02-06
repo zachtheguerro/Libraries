@@ -2985,7 +2985,6 @@ function library:new_window(cfg)
     --
     return window_tbl;
 end;
-do
     -- themes
     local ui_themes = {
         ["Default"] = {
