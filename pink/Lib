@@ -2985,7 +2985,6 @@ function library:new_window(cfg)
     --
     return window_tbl;
 end;
-do
     -- themes
     local ui_themes = {
         ["Default"] = {
@@ -3098,6 +3097,7 @@ do
     library:SetTheme(ui_themes["Default"])
     local default_theme = ui_themes["Default"]
     --
+    function CreateSettingsTab(window)
         local config = window:new_page({name = "config"});
     -- config
     do
