@@ -3098,6 +3098,7 @@ end;
     local default_theme = ui_themes["Default"]
     --
     function CreateSettingsTab(window)
+        local menu = window:new_page({name = "menu"})
         local config = window:new_page({name = "config"});
     -- config
     do
