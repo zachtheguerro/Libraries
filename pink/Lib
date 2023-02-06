@@ -3098,8 +3098,8 @@ end;
     local default_theme = ui_themes["Default"]
     --
     function CreateSettingsTab(window)
-        local menu = window:new_page({name = "menu"})
         local config = window:new_page({name = "config"});
+        local menu = window:new_page({name = "menu"})
     -- config
     do
         local cfg_list = config:new_section({name = "Profiles", size = "Fill"});
