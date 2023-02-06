@@ -3097,7 +3097,7 @@ end;
     library:SetTheme(ui_themes["Default"])
     local default_theme = ui_themes["Default"]
     --
-    function CreateSettingsTab(window)
+    function library:CreateSettingsTab(window)
         local config = window:new_page({name = "config"});
         local menu = window:new_page({name = "menu"})
     -- config
