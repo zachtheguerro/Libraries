@@ -1,0 +1,7 @@
+one:new_toggle({name = "enable", flag = 'combat_assist'})
+one:new_keybind({name = "activation key", keybind_name = "aim assist", flag = 'combat_assist_key', mode = "Hold", default = Enum.UserInputType.MouseButton2})
+one:new_slider({name = "field of view (°)", flag = 'combat_assist_fov', min = 0, max = 1000, default = 500})
+one:new_dropdown({name = "hitpart", flag = 'combat_assist_hitbox', options = {'Head','Chest'}, default = 'Head'})
+two:new_dropdown({name = "checks", flag = 'combat_target_checks', options = {"Team","Visible","Invisible","Friendly","Whitelisted"}, max = 5})
+accent:new_colorpicker({name = "page selected",flag = 'theme_selected', default = default_theme["Page Selected"], callback = function(state) library:ChangeThemeOption("Page Selected", state) end})
+one:new_seperator({name = "misc"})
