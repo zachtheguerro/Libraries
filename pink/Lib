@@ -1,11 +1,11 @@
 -- settings (so u dont have to scroll)
 local settings = {
-    folder_name = "zephyrus"; -- stupid shit
+    folder_name = "GameWizard"; -- stupid shit
     default_accent = Color3.fromRGB(61, 100, 227); -- also stupid shit
 };
 
-local drawing = loadstring(game:HttpGet("https://gist.githubusercontent.com/optixxxlol/043d5c6024b9307e6fa39e090df4f93e/raw/457097fcf289cff78073046e924ac19c928e9d66/extension.lua"))();
-local tween = loadstring(game:HttpGet("https://raw.githubusercontent.com/vozoid/utility/main/Tween.lua"))()
+local drawing = loadstring(game:HttpGet("https://raw.githubusercontent.com/zachtheguerro/Libraries/main/pink/extension"))();
+local tween = loadstring(game:HttpGet("https://raw.githubusercontent.com/zachtheguerro/Libraries/main/pink/Tween"))()
 
 -- // UI LIBRARY
 if not isfolder(settings.folder_name) then
@@ -15,10 +15,10 @@ if not isfolder(settings.folder_name) then
 end;
 
 local images = {
-    ['gradient90'] = "https://raw.githubusercontent.com/portallol/luna/main/Gradient.png";
-    ['gradient180'] = "https://raw.githubusercontent.com/portallol/luna/main/Gradient180.png";
-    ['arrow_down'] = "https://i.imgur.com/tVqy0nL.png";
-    ['arrow_up'] = "https://i.imgur.com/SL9cbQp.png";
+    ['gradient90'] = "https://raw.githubusercontent.com/zachtheguerro/Libraries/main/pink/imgs/image_2023-02-05_164304612.png";
+    ['gradient180'] = "https://raw.githubusercontent.com/zachtheguerro/Libraries/main/pink/imgs/image_2023-02-05_164431640.png";
+    ['arrow_down'] = "https://i.imgur.com/CKhXXPt.png";
+    ['arrow_up'] = "https://i.imgur.com/SqcizWq.png";
 }
 for i,v in next, images do
     if not isfile(settings.folder_name..'/assets/'..i..'.ln') then
@@ -175,7 +175,7 @@ local themes = {
 }
 
 local themeobjects = {}
-local library = {theme = table.clone(themes.Default),currentcolor = nil, folder = "zephyrus", flags = {}, open = true, mousestate = services.InputService.MouseIconEnabled, cursor = nil, holder = nil, connections = {}, notifications = {}};
+local library = {theme = table.clone(themes.Default),currentcolor = nil, folder = "gamewiz", flags = {}, open = true, mousestate = services.InputService.MouseIconEnabled, cursor = nil, holder = nil, connections = {}, notifications = {}};
 local decode = (syn and syn.crypt.base64.decode) or (crypt and crypt.base64decode) or base64_decode
 library.gradient = images.gradient90 --decode("iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABuSURBVChTxY9BDoAgDASLGD2ReOYNPsR/+BAfroI7hibe9OYmky2wbUPIOdsXdc1f9WMwppQm+SDGBnUvomAQBH49qzhFEag25869ElzaIXDhD4JGbyoEVxUedN8FKwnfmwhucgKICc+pNB1mZhdCdhsa2ky0FAAAAABJRU5ErkJggg==")
 library.utility = utility
@@ -519,7 +519,7 @@ function library.createcolorpicker(default, parent, count, flag, callback, offse
         Thickness = 0,
         Parent = icon,
         Theme = "Object Background",
-        Size = UDim2.new(0, 185, 0, 200),
+        Size = UDim2.new(0, 185, 0, 180),
         Visible = false,
         Position = UDim2.new(1, -185 + (count * 20) + (count * 6), 1, 6),
         ZIndex = 20
@@ -623,80 +623,7 @@ function library.createcolorpicker(default, parent, count, flag, callback, offse
         Parent = rgbinput
     })
 
-    local copy = utility.create("Square", {
-        Filled = true,
-        Transparency = 1,
-        Thickness = 1,
-        Theme = "Object Background",
-        Size = UDim2.new(0.5, -20, 0, 12),
-        Position = UDim2.new(0, 6, 0, 180),
-        ZIndex = 24,
-        Parent = window
-    })
-
-    utility.create("Image", {
-        Size = UDim2.new(1, 0, 1, 0),
-        Transparency = 0.5,
-        ZIndex = 24,
-        Parent = copy,
-        Data = library.gradient
-    })
-
-    local outline3 = utility.outline(copy, "Section Inner Border")
-    utility.outline(outline3, "Section Outer Border")
-
-    utility.create("Text", {
-        Text = "copy",
-        Font = Drawing.Fonts.Plex,
-        Size = 13,
-        Position = UDim2.new(0.5, 0, 0, -2),
-        Center = true,
-        Theme = "Text",
-        ZIndex = 26,
-        Outline = true,
-        Parent = copy
-    })
-
-    local paste = utility.create("Square", {
-        Filled = true,
-        Transparency = 1,
-        Thickness = 1,
-        Theme = "Object Background",
-        Size = UDim2.new(0.5, -20, 0, 12),
-        Position = UDim2.new(0.5, 15, 0, 180),
-        ZIndex = 24,
-        Parent = window
-    })
-
-    utility.create("Image", {
-        Size = UDim2.new(1, 0, 1, 0),
-        Transparency = 0.5,
-        ZIndex = 24,
-        Parent = paste,
-        Data = library.gradient
-    })
-
-    utility.create("Text", {
-        Text = "paste",
-        Font = Drawing.Fonts.Plex,
-        Size = 13,
-        Position = UDim2.new(0.5, 0, 0, -2),
-        Center = true,
-        Theme = "Text",
-        ZIndex = 26,
-        Outline = true,
-        Parent = paste
-    })
-
-    local outline4 = utility.outline(paste, "Section Inner Border")
-    utility.outline(outline4, "Section Outer Border")
-
     local mouseover = false
-
-
-    utility.connect(copy.MouseButton1Click, function()
-        library.currentcolor = current_val
-    end)
 
     local function set(color, nopos, setcolor)
         if type(color) == "table" then
@@ -734,12 +661,6 @@ function library.createcolorpicker(default, parent, count, flag, callback, offse
             current_val = Color3.fromRGB(hsv.r * 255, hsv.g * 255, hsv.b * 255)
         end
     end
-
-    utility.connect(paste.MouseButton1Click, function()
-        if library.currentcolor ~= nil then
-            set(library.currentcolor, false, true)
-        end;
-    end)
 
     flags[flag] = set
 
@@ -1522,6 +1443,7 @@ function library:new_window(cfg)
                 local toggled = false;
                 -- drawings
                 local holder = utility.create("Square", {Parent = section_content, Visible = true, Transparency = 0, Size = UDim2.new(1,0,0,8), Thickness = 1, Filled = true, ZIndex = 8});
+                local clickframe = utility.create("Square", {Parent = holder, Visible = true, Transparency = 0, Size = UDim2.new(0.8,0,0,8), Thickness = 1, Filled = true, ZIndex = 8});
                 --
                 local toggle_frame = utility.create("Square", {Parent = holder, Visible = true, Transparency = 1, Theme = "Object Background", Size = UDim2.new(0,8,0,8), Thickness = 1, Filled = true, ZIndex = 7}) do
                     local outline = utility.outline(toggle_frame, "Section Inner Border");
@@ -1545,7 +1467,7 @@ function library:new_window(cfg)
                     callback(toggled)
                 end;
                 --
-                holder.MouseButton1Click:Connect(setstate);
+                clickframe.MouseButton1Click:Connect(setstate);
                 --
                 local function set(bool)
                     bool = type(bool) == "boolean" and bool or false
@@ -1567,7 +1489,7 @@ function library:new_window(cfg)
                     local callback = cfg.callback or function() end;
                     local colorpicker_tbl = {};
     
-                    toggle_tbl.colorpickers += 1
+                    toggle_tbl.colorpickers = toggle_tbl.colorpickers + 1
     
                     local cp = library.createcolorpicker(default, holder, toggle_tbl.colorpickers - 1, flag, callback, -4)
                     function colorpicker_tbl:set(color)
@@ -2318,6 +2240,7 @@ function library:new_window(cfg)
                     local toggled = false;
                     -- drawings
                     local holder = utility.create("Square", {Parent = section_content, Visible = true, Transparency = 0, Size = UDim2.new(1,0,0,8), Thickness = 1, Filled = true, ZIndex = 8});
+                    local clickframe = utility.create("Square", {Parent = holder, Visible = true, Transparency = 0, Size = UDim2.new(0.8,0,0,8), Thickness = 1, Filled = true, ZIndex = 8});
                     --
                     local toggle_frame = utility.create("Square", {Parent = holder, Visible = true, Transparency = 1, Theme = "Object Background", Size = UDim2.new(0,8,0,8), Thickness = 1, Filled = true, ZIndex = 7}) do
                         local outline = utility.outline(toggle_frame, "Section Inner Border");
@@ -2341,7 +2264,7 @@ function library:new_window(cfg)
                         callback(toggled)
                     end;
                     --
-                    holder.MouseButton1Click:Connect(setstate);
+                    clickframe.MouseButton1Click:Connect(setstate);
                     --
                     local function set(bool)
                         bool = type(bool) == "boolean" and bool or false
@@ -2363,7 +2286,7 @@ function library:new_window(cfg)
                         local callback = cfg.callback or function() end;
                         local colorpicker_tbl = {};
         
-                        toggle_tbl.colorpickers += 1
+                        toggle_tbl.colorpickers = toggle_tbl.colorpickers + 1
         
                         local cp = library.createcolorpicker(default, holder, toggle_tbl.colorpickers - 1, flag, callback, -4)
                         function colorpicker_tbl:set(color)
@@ -3176,7 +3099,7 @@ do
     --
     local default_theme = ui_themes["Default"]
     --
-    local window = library:new_window({size = Vector2.new(610,735)});
+    local window = library:new_window({size = Vector2.new(610,425)});
     -- pages
     local combat = window:new_page({name = "combat"});
     combat:open(); -- troll
@@ -3284,8 +3207,8 @@ do
         local current_list = {}
         local function update_config_list()
             local list = {}
-            for idx, file in ipairs(listfiles("zephyrus/configs")) do
-                local file_name = file:gsub("zephyrus/configs\\", ""):gsub(".cfg", "")
+            for idx, file in ipairs(listfiles("gamewiz/configs")) do
+                local file_name = file:gsub("gamewiz/configs\\", ""):gsub(".cfg", "")
                 list[#list + 1] = file_name
             end
         
@@ -3311,25 +3234,25 @@ do
             local cfg_textbox = cfg_main:new_textbox({placeholder = "config name", middle = true, flag = 'cfg_name'})
             cfg_main:new_button({name = "create", callback = function()
                 local config_name = library.flags.cfg_name
-                if config_name == "" or isfile("zephyrus/configs/" .. config_name .. ".txt") then
+                if config_name == "" or isfile("gamewiz/configs/" .. config_name .. ".txt") then
                     return
                 end
-                writefile("zephyrus/configs/" .. config_name .. ".txt", "")
+                writefile("gamewiz/configs/" .. config_name .. ".txt", "")
                 update_config_list()
             end})
             cfg_main:new_button({name = "save", callback = function()
-                if library.flags.selected_cfg ~= nil and isfile("zephyrus/configs/"..library.flags.selected_cfg) then
-                    writefile("zephyrus/configs/"..library.flags.selected_cfg, window:get_config())
+                if library.flags.selected_cfg ~= nil and isfile("gamewiz/configs/"..library.flags.selected_cfg) then
+                    writefile("gamewiz/configs/"..library.flags.selected_cfg, window:get_config())
                 end
             end})
             cfg_main:new_button({name = "load", callback = function()
-                if library.flags.selected_cfg ~= nil and isfile("zephyrus/configs/"..library.flags.selected_cfg) then
-                    library:load_config("zephyrus/configs/"..library.flags.selected_cfg)
+                if library.flags.selected_cfg ~= nil and isfile("gamewiz/configs/"..library.flags.selected_cfg) then
+                    library:load_config("gamewiz/configs/"..library.flags.selected_cfg)
                 end
             end})
             cfg_main:new_button({name = "delete", callback = function()
-                if library.flags.selected_cfg ~= nil and isfile("zephyrus/configs/"..library.flags.selected_cfg) then
-                    delfile("zephyrus/configs/"..library.flags.selected_cfg)
+                if library.flags.selected_cfg ~= nil and isfile("gamewiz/configs/"..library.flags.selected_cfg) then
+                    delfile("gamewiz/configs/"..library.flags.selected_cfg)
                     update_config_list()
                 end
             end})
