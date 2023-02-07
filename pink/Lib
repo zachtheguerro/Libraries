@@ -1246,12 +1246,12 @@ function library.createbox(box, text, callback, finishedcallback)
 end
 --
 local keys = {
-    [Enum.KeyCode.LeftShift] = "LeftShift",
-    [Enum.KeyCode.RightShift] = "RightShift",
-    [Enum.KeyCode.LeftControl] = "LeftControl",
-    [Enum.KeyCode.RightControl] = "RightControl",
-    [Enum.KeyCode.LeftAlt] = "LeftAlt",
-    [Enum.KeyCode.RightAlt] = "RightAlt",
+    [Enum.KeyCode.LeftShift] = "LS",
+    [Enum.KeyCode.RightShift] = "RS",
+    [Enum.KeyCode.LeftControl] = "LC",
+    [Enum.KeyCode.RightControl] = "RC",
+    [Enum.KeyCode.LeftAlt] = "LA",
+    [Enum.KeyCode.RightAlt] = "RtA",
     [Enum.KeyCode.CapsLock] = "CAPS",
     [Enum.KeyCode.One] = "1",
     [Enum.KeyCode.Two] = "2",
@@ -1263,16 +1263,16 @@ local keys = {
     [Enum.KeyCode.Eight] = "8",
     [Enum.KeyCode.Nine] = "9",
     [Enum.KeyCode.Zero] = "0",
-    [Enum.KeyCode.KeypadOne] = "Numpad1",
-    [Enum.KeyCode.KeypadTwo] = "Numpad2",
-    [Enum.KeyCode.KeypadThree] = "Numpad3",
-    [Enum.KeyCode.KeypadFour] = "Numpad4",
-    [Enum.KeyCode.KeypadFive] = "Numpad5",
-    [Enum.KeyCode.KeypadSix] = "Numpad6",
-    [Enum.KeyCode.KeypadSeven] = "Numpad7",
-    [Enum.KeyCode.KeypadEight] = "Numpad8",
-    [Enum.KeyCode.KeypadNine] = "Numpad9",
-    [Enum.KeyCode.KeypadZero] = "Numpad0",
+    [Enum.KeyCode.KeypadOne] = "Num1",
+    [Enum.KeyCode.KeypadTwo] = "Num2",
+    [Enum.KeyCode.KeypadThree] = "Num3",
+    [Enum.KeyCode.KeypadFour] = "Num4",
+    [Enum.KeyCode.KeypadFive] = "Num5",
+    [Enum.KeyCode.KeypadSix] = "Num6",
+    [Enum.KeyCode.KeypadSeven] = "Num7",
+    [Enum.KeyCode.KeypadEight] = "Num8",
+    [Enum.KeyCode.KeypadNine] = "Num9",
+    [Enum.KeyCode.KeypadZero] = "Num0",
     [Enum.KeyCode.Minus] = "-",
     [Enum.KeyCode.Equals] = "=",
     [Enum.KeyCode.Tilde] = "~",
@@ -1290,9 +1290,9 @@ local keys = {
     [Enum.KeyCode.Plus] = "+",
     [Enum.KeyCode.Period] = ".",
     [Enum.KeyCode.Backquote] = "`",
-    [Enum.UserInputType.MouseButton1] = "MouseButton1",
-    [Enum.UserInputType.MouseButton2] = "MouseButton2",
-    [Enum.UserInputType.MouseButton3] = "MouseButton3"
+    [Enum.UserInputType.MouseButton1] = "MB1",
+    [Enum.UserInputType.MouseButton2] = "MB2",
+    [Enum.UserInputType.MouseButton3] = "MB3"
 }
 -- // UI START
 function library:load_config(cfg_name)
@@ -1706,292 +1706,292 @@ function library:new_window(cfg)
             end;
             -- create keybind
             function section_tbl:new_keybind(cfg)
-                local dropdown_tbl = {};
-                local name = cfg.name or cfg.Name or "new keybind";
-                local key_name = cfg.keybind_name or cfg.KeyBind_Name or name;
-                local default = cfg.default or cfg.Default or nil;
-                local mode = cfg.mode or cfg.Mode or "Hold";
-                local blacklist = cfg.blacklist or cfg.Blacklist or {};
-                local flag = cfg.flag or utility.nextflag();
-                local callback = cfg.callback or function() end;
-                local ignore_list = cfg.ignore or cfg.Ignore or false;
-                local key_mode = mode;
-                --
-                local holder = utility.create("Square", {Transparency = 0, ZIndex = 7,Size = UDim2.new(1, 0, 0, 29),Parent = section_content});
-                --
-                local title = utility.create("Text", {
-                    Text = name,
-                    Font = Drawing.Fonts.Plex,
-                    Size = 13,
-                    Position = UDim2.new(0, -2, 0, -2),
-                    Theme = "Text",
-                    ZIndex = 7,
-                    Outline = false,
-                    Parent = holder
-                });
-                --
-                if not offset then
-                    offset = -1
-                end
-            
-                local keybindname = key_name or "";
-            
-                local frame = utility.create("Square",{
-                    Theme = "Object Background",
-                    Size = UDim2.new(1, 0, 0, 15),
-                    Position = UDim2.new(0, 0, 1, -15),
-                    Filled = true,
-                    Parent = holder,
-                    Thickness = 1,
-                    ZIndex = 8
-                })
-            
-                local outline1 = utility.outline(frame, "Section Inner Border")
-                utility.outline(outline1, "Section Outer Border")
-                utility.create("Image", {Data = library.gradient, Transparency = 0.5, Visible = true, Parent = frame, Size = UDim2.new(1,0,1,0), ZIndex = 8});
-
-                local mode_frame = utility.create("Square",{
-                    Theme = "Object Background",
-                    Size = UDim2.new(0,44,0,35),
-                    Position = UDim2.new(1,10,0,-10),
-                    Filled = true,
-                    Parent = frame,
-                    Thickness = 1,
-                    ZIndex = 8,
-                    Visible = false
-                })
-            
-                local mode_outline1 = utility.outline(mode_frame, "Section Inner Border")
-                utility.outline(mode_outline1, "Section Outer Border")
-                utility.create("Image", {Data = library.gradient, Transparency = 0.5, Visible = true, Parent = mode_frame, Size = UDim2.new(1,0,1,0), ZIndex = 8});
-
-                local holdtext = utility.create("Text", {
-                    Text = "Hold",
-                    Font = Drawing.Fonts.Plex,
-                    Size = 13,
-                    Theme = key_mode == "Hold" and "Accent" or "Text",
-                    Position = UDim2.new(0.5,0,0,2),
-                    ZIndex = 8,
-                    Parent = mode_frame,
-                    Outline = false,
-                    Center = true
-                })
+                    local dropdown_tbl = {};
+                    local name = cfg.name or cfg.Name or "new keybind";
+                    local key_name = cfg.keybind_name or cfg.KeyBind_Name or name;
+                    local default = cfg.default or cfg.Default or nil;
+                    local mode = cfg.mode or cfg.Mode or "Hold";
+                    local blacklist = cfg.blacklist or cfg.Blacklist or {};
+                    local flag = cfg.flag or utility.nextflag();
+                    local callback = cfg.callback or function() end;
+                    local ignore_list = cfg.ignore or cfg.Ignore or false;
+                    local key_mode = mode;
+                    --
+                    local holder = utility.create("Square", {Transparency = 0, ZIndex = 7,Size = UDim2.new(0.25, 0, 0, 12),Parent = section_content});
+                    --f
+                    local title = utility.create("Text", {
+                        Text = name,
+                        Font = Drawing.Fonts.Plex,
+                        Size = 13,
+                        Position = UDim2.new(0, -2, 0, 0),
+                        Theme = "Text",
+                        ZIndex = 7,
+                        Outline = false,
+                        Parent = holder
+                    });
+                    --
+                    if not offset then
+                        offset = -1
+                    end
                 
-                local toggletext = utility.create("Text", {
-                    Text = "Toggle",
-                    Font = Drawing.Fonts.Plex,
-                    Size = 13,
-                    Theme = key_mode == "Toggle" and "Accent" or "Text",
-                    Position = UDim2.new(0.5,0,0,18),
-                    ZIndex = 8,
-                    Parent = mode_frame,
-                    Outline = false,
-                    Center = true
-                })
-
-                local holdbutton = utility.create("Square",{
-                    Color = Color3.new(0,0,0),
-                    Size = UDim2.new(0,44,0,12),
-                    Position = UDim2.new(0,0,0,2),
-                    Filled = false,
-                    Parent = mode_frame,
-                    Thickness = 1,
-                    ZIndex = 8,
-                    Transparency = 0
-                })
-
-                local togglebutton = utility.create("Square",{
-                    Color = Color3.new(0,0,0),
-                    Size = UDim2.new(0,44,0,12),
-                    Position = UDim2.new(0,0,0,20),
-                    Filled = false,
-                    Parent = mode_frame,
-                    Thickness = 1,
-                    ZIndex = 8,
-                    Transparency = 0
-                })
-            
-                local keytext = utility.create("Text", {
-                    Font = Drawing.Fonts.Plex,
-                    Size = 13,
-                    Theme = "Text",
-                    Position = UDim2.new(0,2,0,0),
-                    ZIndex = 8,
-                    Parent = frame,
-                    Outline = false,
-                    Center = false
-                })
-                holdbutton.MouseButton1Click:Connect(function()
-                    key_mode = "Hold"
-                    utility.changeobjecttheme(holdtext, "Accent")
-                    utility.changeobjecttheme(toggletext, "Text")
-                    mode_frame.Visible = false
-                end)
-                togglebutton.MouseButton1Click:Connect(function()
-                    key_mode = "Toggle"
-                    utility.changeobjecttheme(holdtext, "Text")
-                    utility.changeobjecttheme(toggletext, "Accent")
-                    mode_frame.Visible = false
-                end)
-                local list_obj = nil;
-                if ignore_list == false then
-                    list_obj = window_key_list:add_keybind(keybindname, keytext.Text)
-                end;
-                local removetext = utility.create("Text", { -- im lazy to rename everything sorry
-                    Font = Drawing.Fonts.Plex,
-                    Size = 13,
-                    Color = Color3.fromRGB(245,245,245),
-                    Position = UDim2.new(1,-20,0,0),
-                    ZIndex = 8,
-                    Parent = frame,
-                    Outline = false,
-                    Center = false,
-                    Text = "...",
-                    Transparency = 0.5
-                })
-            
-                local removetext_bold = utility.create("Text", {
-                    Font = Drawing.Fonts.Plex,
-                    Size = 13,
-                    Color = Color3.fromRGB(245,245,245),
-                    Position = UDim2.new(1,-21,0,0),
-                    ZIndex = 8,
-                    Parent = frame,
-                    Outline = false,
-                    Center = false,
-                    Text = "...",
-                    Transparency = 0.5
-                })
-            
-                local remove = utility.create("Square", {Filled = true, Position = UDim2.new(1,-20,0,3),Thickness = 1, Transparency = 0, Visible = true, Parent = frame, Size = UDim2.new(0,utility.textlength("x", 2, 13).X + 10, 0, 10), ZIndex = 13});
-                remove.MouseButton1Click:Connect(function()
-                    mode_frame.Visible = true
-                end)
-                local key
-                local state = false
-                local binding
-            
-                local function set(newkey)
-                    if c then
-                        c:Disconnect();
-                        if flag then
-                            library.flags[flag] = false;
-                        end
-                        callback(false);
-                        if ignore_list == false then
-                           list_obj:is_active(false)
-                        end
-                    end
-                    if tostring(newkey):find("Enum.KeyCode.") then
-                        newkey = Enum.KeyCode[tostring(newkey):gsub("Enum.KeyCode.", "")]
-                    elseif tostring(newkey):find("Enum.UserInputType.") then
-                        newkey = Enum.UserInputType[tostring(newkey):gsub("Enum.UserInputType.", "")]
-                    end
-            
-                    if newkey ~= nil and not table.find(blacklist, newkey) then
-                        key = newkey
-            
-                        local text = (keys[newkey] or tostring(newkey):gsub("Enum.KeyCode.", ""))
-            
-                        keytext.Text = text
-                        if ignore_list == false then
-                            list_obj:update_text(tostring(keybindname.." ["..text.."]"))
-                        end
-                    else
-                        key = nil
-            
-                        local text = ""
-            
-                        keytext.Text = text
-                        if ignore_list == false then
-                            list_obj:update_text(tostring(keybindname.." ["..text.."]"))
-                        end
-                    end
-            
-                    if bind ~= '' or bind ~= nil then
-                        state = false
-                        if flag then
-                            library.flags[flag] = state;
-                        end
-                        callback(false)
-                        if ignore_list == false then
-                           list_obj:is_active(state)
-                        end
-                    end
-                end
-            
-                utility.connect(services.InputService.InputBegan, function(inp)
-                    if (inp.KeyCode == key or inp.UserInputType == key) and not binding then
-                        if key_mode == "Hold" then
+                    local keybindname = key_name or "";
+                
+                    local frame = utility.create("Square",{
+                        Theme = "Object Background",
+                        Size = UDim2.new(1, 0, 0, 15),
+                        Position = UDim2.new(3.069, 0, 1, -12),
+                        Filled = true,
+                        Parent = holder,
+                        Thickness = 1,
+                        ZIndex = 8
+                    })
+                
+                    local outline1 = utility.outline(frame, "Section Inner Border")
+                    utility.outline(outline1, "Section Outer Border")
+                    utility.create("Image", {Data = library.gradient, Transparency = 0.5, Visible = true, Parent = frame, Size = UDim2.new(1,0,1,0), ZIndex = 8});
+    
+                    local mode_frame = utility.create("Square",{
+                        Theme = "Object Background",
+                        Size = UDim2.new(0,44,0,35),
+                        Position = UDim2.new(1,10,0,-10),
+                        Filled = true,
+                        Parent = frame,
+                        Thickness = 1,
+                        ZIndex = 8,
+                        Visible = false
+                    })
+                
+                    local mode_outline1 = utility.outline(mode_frame, "Section Inner Border")
+                    utility.outline(mode_outline1, "Section Outer Border")
+                    utility.create("Image", {Data = library.gradient, Transparency = 0.5, Visible = true, Parent = mode_frame, Size = UDim2.new(1,0,1,0), ZIndex = 8});
+    
+                    local holdtext = utility.create("Text", {
+                        Text = "Hold",
+                        Font = Drawing.Fonts.Plex,
+                        Size = 13,
+                        Theme = key_mode == "Hold" and "Accent" or "Text",
+                        Position = UDim2.new(0.5,0,0,2),
+                        ZIndex = 8,
+                        Parent = mode_frame,
+                        Outline = false,
+                        Center = true
+                    })
+                    
+                    local toggletext = utility.create("Text", {
+                        Text = "Toggle",
+                        Font = Drawing.Fonts.Plex,
+                        Size = 13,
+                        Theme = key_mode == "Toggle" and "Accent" or "Text",
+                        Position = UDim2.new(0.5,0,0,18),
+                        ZIndex = 8,
+                        Parent = mode_frame,
+                        Outline = false,
+                        Center = true
+                    })
+    
+                    local holdbutton = utility.create("Square",{
+                        Color = Color3.new(0,0,0),
+                        Size = UDim2.new(0,44,0,12),
+                        Position = UDim2.new(0,0,0,2),
+                        Filled = false,
+                        Parent = mode_frame,
+                        Thickness = 1,
+                        ZIndex = 8,
+                        Transparency = 0
+                    })
+    
+                    local togglebutton = utility.create("Square",{
+                        Color = Color3.new(0,0,0),
+                        Size = UDim2.new(0,44,0,12),
+                        Position = UDim2.new(0,0,0,20),
+                        Filled = false,
+                        Parent = mode_frame,
+                        Thickness = 1,
+                        ZIndex = 8,
+                        Transparency = 0
+                    })
+                
+                    local keytext = utility.create("Text", {
+                        Font = Drawing.Fonts.Plex,
+                        Size = 13,
+                        Theme = "Text",
+                        Position = UDim2.new(0,2,0,0),
+                        ZIndex = 8,
+                        Parent = frame,
+                        Outline = false,
+                        Center = false
+                    })
+                    holdbutton.MouseButton1Click:Connect(function()
+                        key_mode = "Hold"
+                        utility.changeobjecttheme(holdtext, "Accent")
+                        utility.changeobjecttheme(toggletext, "Text")
+                        mode_frame.Visible = false
+                    end)
+                    togglebutton.MouseButton1Click:Connect(function()
+                        key_mode = "Toggle"
+                        utility.changeobjecttheme(holdtext, "Text")
+                        utility.changeobjecttheme(toggletext, "Accent")
+                        mode_frame.Visible = false
+                    end)
+                    local list_obj = nil;
+                    if ignore_list == false then
+                        list_obj = window_key_list:add_keybind(keybindname, keytext.Text)
+                    end;
+                    local removetext = utility.create("Text", { -- im lazy to rename everything sorry
+                        Font = Drawing.Fonts.Plex,
+                        Size = 13,
+                        Color = Color3.fromRGB(245,245,245),
+                        Position = UDim2.new(1,-20,0,0),
+                        ZIndex = 8,
+                        Parent = frame,
+                        Outline = false,
+                        Center = false,
+                        Text = "...",
+                        Transparency = 0.5
+                    })
+                
+                    local removetext_bold = utility.create("Text", {
+                        Font = Drawing.Fonts.Plex,
+                        Size = 13,
+                        Color = Color3.fromRGB(245,245,245),
+                        Position = UDim2.new(1,-21,0,0),
+                        ZIndex = 8,
+                        Parent = frame,
+                        Outline = false,
+                        Center = false,
+                        Text = "...",
+                        Transparency = 0.5
+                    })
+                
+                    local remove = utility.create("Square", {Filled = true, Position = UDim2.new(1,-20,0,3),Thickness = 1, Transparency = 0, Visible = true, Parent = frame, Size = UDim2.new(0,utility.textlength("x", 2, 13).X + 10, 0, 10), ZIndex = 13});
+                    remove.MouseButton1Click:Connect(function()
+                        mode_frame.Visible = true
+                    end)
+                    local key
+                    local state = false
+                    local binding
+                
+                    local function set(newkey)
+                        if c then
+                            c:Disconnect();
                             if flag then
-                                library.flags[flag] = true
+                                library.flags[flag] = false;
                             end
+                            callback(false);
                             if ignore_list == false then
-                               list_obj:is_active(true)
+                               list_obj:is_active(false)
                             end
-                            c = utility.connect(game:GetService("RunService").RenderStepped, function()
-                                if callback then
-                                    callback(true)
-                                end
-                            end)
+                        end
+                        if tostring(newkey):find("Enum.KeyCode.") then
+                            newkey = Enum.KeyCode[tostring(newkey):gsub("Enum.KeyCode.", "")]
+                        elseif tostring(newkey):find("Enum.UserInputType.") then
+                            newkey = Enum.UserInputType[tostring(newkey):gsub("Enum.UserInputType.", "")]
+                        end
+                
+                        if newkey ~= nil and not table.find(blacklist, newkey) then
+                            key = newkey
+                
+                            local text = (keys[newkey] or tostring(newkey):gsub("Enum.KeyCode.", ""))
+                
+                            keytext.Text = text
+                            if ignore_list == false then
+                                list_obj:update_text(tostring(keybindname.." ["..text.."]"))
+                            end
                         else
-                            state = not state
+                            key = nil
+                
+                            local text = ""
+                
+                            keytext.Text = text
+                            if ignore_list == false then
+                                list_obj:update_text(tostring(keybindname.." ["..text.."]"))
+                            end
+                        end
+                
+                        if bind ~= '' or bind ~= nil then
+                            state = false
                             if flag then
                                 library.flags[flag] = state;
                             end
-                            callback(state)
+                            callback(false)
                             if ignore_list == false then
                                list_obj:is_active(state)
                             end
                         end
                     end
-                end)
-            
-                set(default)
-            
-                frame.MouseButton1Click:Connect(function()
-                    if not binding then
-            
-                        keytext.Text = "..."
-                        
-                        binding = utility.connect(services.InputService.InputBegan, function(input, gpe)
-                            set(input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode or input.UserInputType)
-                            utility.disconnect(binding)
-                            task.wait()
-                            binding = nil
-                        end)
-                    end
-                end)
-            
-                utility.connect(services.InputService.InputEnded, function(inp)
-                    if key_mode == "Hold" then
-                        if key ~= '' or key ~= nil then
-                            if inp.KeyCode == key or inp.UserInputType == key then
-                                if c then
-                                    c:Disconnect()
-                                    if ignore_list == false then
-                                       list_obj:is_active(false)
-                                    end
-                                    if flag then
-                                        library.flags[flag] = false;
-                                    end
+                
+                    utility.connect(services.InputService.InputBegan, function(inp)
+                        if (inp.KeyCode == key or inp.UserInputType == key) and not binding then
+                            if key_mode == "Hold" then
+                                if flag then
+                                    library.flags[flag] = true
+                                end
+                                if ignore_list == false then
+                                   list_obj:is_active(true)
+                                end
+                                c = utility.connect(game:GetService("RunService").RenderStepped, function()
                                     if callback then
-                                        callback(false)
+                                        callback(true)
+                                    end
+                                end)
+                            else
+                                state = not state
+                                if flag then
+                                    library.flags[flag] = state;
+                                end
+                                callback(state)
+                                if ignore_list == false then
+                                   list_obj:is_active(state)
+                                end
+                            end
+                        end
+                    end)
+                
+                    set(default)
+                
+                    frame.MouseButton1Click:Connect(function()
+                        if not binding then
+                
+                            keytext.Text = "..."
+                            
+                            binding = utility.connect(services.InputService.InputBegan, function(input, gpe)
+                                set(input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode or input.UserInputType)
+                                utility.disconnect(binding)
+                                task.wait()
+                                binding = nil
+                            end)
+                        end
+                    end)
+                
+                    utility.connect(services.InputService.InputEnded, function(inp)
+                        if key_mode == "Hold" then
+                            if key ~= '' or key ~= nil then
+                                if inp.KeyCode == key or inp.UserInputType == key then
+                                    if c then
+                                        c:Disconnect()
+                                        if ignore_list == false then
+                                           list_obj:is_active(false)
+                                        end
+                                        if flag then
+                                            library.flags[flag] = false;
+                                        end
+                                        if callback then
+                                            callback(false)
+                                        end
                                     end
                                 end
                             end
                         end
+                    end)
+                
+                    local keybindtypes = {};
+                
+                    function keybindtypes:set(newkey)
+                        set(newkey)
                     end
-                end)
-            
-                local keybindtypes = {};
-            
-                function keybindtypes:set(newkey)
-                    set(newkey)
-                end
-            
-                return keybindtypes
-            end;
+                
+                    return keybindtypes
+                end;
             -- create seperator
             function section_tbl:new_seperator(cfg)
                 -- settings
@@ -2514,13 +2514,13 @@ function library:new_window(cfg)
                     local ignore_list = cfg.ignore or cfg.Ignore or false;
                     local key_mode = mode;
                     --
-                    local holder = utility.create("Square", {Transparency = 0, ZIndex = 7,Size = UDim2.new(1, 0, 0, 29),Parent = section_content});
+                    local holder = utility.create("Square", {Transparency = 0, ZIndex = 7,Size = UDim2.new(0.25, 0, 0, 12),Parent = section_content});
                     --
                     local title = utility.create("Text", {
                         Text = name,
                         Font = Drawing.Fonts.Plex,
                         Size = 13,
-                        Position = UDim2.new(0, -2, 0, -2),
+                        Position = UDim2.new(0, -2, 0, 0),
                         Theme = "Text",
                         ZIndex = 7,
                         Outline = false,
@@ -2536,7 +2536,7 @@ function library:new_window(cfg)
                     local frame = utility.create("Square",{
                         Theme = "Object Background",
                         Size = UDim2.new(1, 0, 0, 15),
-                        Position = UDim2.new(0, 0, 1, -15),
+                        Position = UDim2.new(3.069, 0, 1, -12),
                         Filled = true,
                         Parent = holder,
                         Thickness = 1,
