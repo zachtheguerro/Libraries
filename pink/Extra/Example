@@ -2,101 +2,58 @@ local library = loadstring(game:HttpGet('https://raw.githubusercontent.com/zacht
 do
     local window = library:new_window({size = Vector2.new(610,425)});
     -- pages
-    local combat = window:new_page({name = "combat"});
-    combat:open(); -- troll
-    local visuals = window:new_page({name = "visuals"});
+    local Tab = window:new_page({name = "Tab"});
+    Tab:open();
     library:CreateSettingsTab(window)
-    -- combat
-    do
-        local combat_main = combat:new_section_holder({name = "aim assist", size = "Fill"}) do
-            local combat_assist = combat_main:new_section({name = 'main'}) do
-                combat_assist:open()
-                combat_assist:new_toggle({name = "enable", flag = 'combat_assist'})
-                combat_assist:new_keybind({name = "activation key", keybind_name = "aim assist", flag = 'combat_assist_key', mode = "Hold", default = Enum.UserInputType.MouseButton2})
-                combat_assist:new_slider({name = "field of view (°)", flag = 'combat_assist_fov', min = 0, max = 1000, default = 500})
-                combat_assist:new_slider({name = "horizontal smoothing", flag = 'combat_assist_x', min = 0, max = 10, default = 1, float = 0.1})
-                combat_assist:new_slider({name = "vertical smoothing", flag = 'combat_assist_y', min = 0, max = 10, default = 1, float = 0.1})
-                combat_assist:new_dropdown({name = "hitpart", flag = 'combat_assist_hitbox', options = {'Head','Chest'}, default = 'Head'})
-                combat_assist:new_seperator({name = "misc"})
-                combat_assist:new_toggle({name = "render field of view", flag = 'combat_assist_fov_render'}):new_colorpicker({flag = 'combat_assist_fov_color', default = Color3.fromRGB(255,0,0)})
-                combat_assist:new_toggle({name = "enable mouse offset", flag = 'combat_offset'})
-                combat_assist:new_slider({name = "offset x", flag = 'combat_offset_x', min = 0, max = 100})
-                combat_assist:new_slider({name = "offset y", flag = 'combat_offset_y', min = 0, max = 100})
-            end;
-            local combat_target = combat_main:new_section({name = "targeting"}) do
-                combat_target:new_dropdown({name = "checks", flag = 'combat_target_checks', options = {"Team","Visible","Invisible","Friendly","Whitelisted"}, max = 5})
-            end;
+    
+    local TabHolder = Tab:new_section_holder({name = "player esp", side = "left", size = "Fill"}) do
+        local Section1 = TabHolder:new_section({name = "Section 1"}) do
+        Section1:new_toggle({name = "", flag = '', callback = function(v) end})
+
+        local Toggle = Section1:new_toggle({name = "", flag = '', callback = function(v) end}) do
+            Toggle:new_colorpicker({name = "",flag = '', default = Color3.fromRGB(255,255,255), callback = function(v) end})
+        end
+        
+        Section1:new_keybind({name = "", keybind_name = "", flag = '', mode = "Hold", default = Enum.UserInputType.MouseButton2, callback = function(v) end})
+        Section1:new_slider({name = "", flag = '', min = 0, max = 100, default = 50, callback = function(v) end})
+        Section1:new_dropdown({name = "", flag = '', options = {'1','2', '3'}, default = 'Head', callback = function(v) end})
+        Section1:new_dropdown({name = "", flag = '', options = {'1','2','3'}, max = 3, callback = function(v) end})
+        Section1:new_colorpicker({name = "",flag = '', default = Color3.fromRGB(255,255,255), callback = function(v) end})
+        Section1:new_button({name = "", confirm = false, callback = function() end})
+        Section1:new_seperator({name = ""})
         end;
-        local combat_mods = combat:new_section({name = "modifications", side = "right", size = 140}) do
-            combat_mods:new_toggle({name = "recoil compensation", flag = 'mods_recoil'})
-            combat_mods:new_slider({name = "recoil amount (%)", flag = 'mods_recoil_value', min = 0, max = 100, default = 100, float = 1})
-            combat_mods:new_toggle({name = "compensate spread", flag = 'mods_spread'})
-            combat_mods:new_toggle({name = "compensate bullet drop", flag = 'mods_drop'})
-            combat_mods:new_toggle({name = "compensate gun bobbing", flag = 'mods_bob'})
-            combat_mods:new_toggle({name = "compensate camera shake", flag = 'mods_shake'})
-            combat_mods:new_toggle({name = "wallbang", flag = 'mods_wallbang', risky = true})
-        end;
-        local combat_hitsounds = combat:new_section_holder({name = "hitsounds", side = "right", size = 175}) do
-            local hitsounds_hitmarker = combat_hitsounds:new_section({name = "hitmarker"}) do
-                hitsounds_hitmarker:open();
-                hitsounds_hitmarker:new_toggle({name = "override sound", flag = 'hitmarker_toggle'})
-                hitsounds_hitmarker:new_dropdown({name = "custom sound", flag = 'hitmarker_sound', options = {}})
-                hitsounds_hitmarker:new_slider({name = "volume", flag = 'hitmarker_sound', min = 0, max = 10, default = 3.5, float = 0.1})
-                hitsounds_hitmarker:new_slider({name = "pitch", flag = 'hitmarker_pitch', min = 0, max = 10, default = 1, float = 0.1})
-            end;
-            local hitsounds_headshot = combat_hitsounds:new_section({name = "headshot"})
-            local hitsounds_kill = combat_hitsounds:new_section({name = "kill"})
+        
+        local Section2 = TabHolder:new_section({name = "Section 2"}) do
+        Section2:new_toggle({name = "", flag = '', callback = function(v) end})
+
+        local Toggle = Section2:new_toggle({name = "", flag = '', callback = function(v) end}) do
+            Toggle:new_colorpicker({name = "",flag = '', default = Color3.fromRGB(255,255,255), callback = function(v) end})
+        end
+        
+        Section2:new_keybind({name = "", keybind_name = "", flag = '', mode = "Hold", default = Enum.UserInputType.MouseButton2, callback = function(v) end})
+        Section2:new_slider({name = "", flag = '', min = 0, max = 100, default = 50, callback = function(v) end})
+        Section2:new_dropdown({name = "", flag = '', options = {'1','2', '3'}, default = 'Head', callback = function(v) end})
+        Section2:new_dropdown({name = "", flag = '', options = {'1','2','3'}, max = 3, callback = function(v) end})
+        Section2:new_colorpicker({name = "",flag = '', default = Color3.fromRGB(255,255,255), callback = function(v) end})
+        Section2:new_button({name = "", confirm = false, callback = function() end})
+        Section2:new_seperator({name = ""})
         end;
     end;
-    -- visuals
-    do
-        local visuals_players = visuals:new_section_holder({name = "player esp", size = "Fill"}) do
-            local players_general = visuals_players:new_section({name = "general"}) do
-                players_general:new_toggle({name = "enable esp", flag = 'esp_enabled'});
-                players_general:new_slider({name = "render distance", max = 1000, min = 0, default = 500, flag = 'esp_render_distance', float = 1});
-                players_general:new_toggle({name = "bounding box", flag = 'esp_box'}):new_colorpicker({flag = 'esp_box_color', default = Color3.fromRGB(255,255,255)});
-                players_general:new_toggle({name = "name", flag = 'esp_name'}):new_colorpicker({flag = 'esp_name_color', default = Color3.fromRGB(255,255,255)});
-                players_general:new_toggle({name = "weapon", flag = 'esp_weapon'}):new_colorpicker({flag = 'esp_weapon_color', default = Color3.fromRGB(255,255,255)});
-                players_general:new_toggle({name = "distance", flag = 'esp_distance'}):new_colorpicker({flag = 'esp_distance_color', default = Color3.fromRGB(255,255,255)});
-                players_general:new_toggle({name = "health", flag = 'esp_health'}):new_colorpicker({flag = 'esp_health_color', default = Color3.fromRGB(255,255,255)});
-                local healthbar = players_general:new_toggle({name = "healthbar", flag = 'esp_healthbar'}) do
-                    healthbar:new_colorpicker({flag = 'esp_health_color2', default = Color3.fromRGB(255,0,0)});
-                    healthbar:new_colorpicker({flag = 'esp_health_color1', default = Color3.fromRGB(0,255,0)});
-                end;
-                players_general:new_toggle({name = "flags", flag = 'esp_flags'});
-                players_general:new_dropdown({name = "flag types", flag = 'esp_flags_types', options = {"Visible","Friendly"}, max = 2});
-                local chams = players_general:new_toggle({name = "chams", flag = 'esp_chams'}) do
-                    chams:new_colorpicker({flag = 'esp_chams_color2', default = Color3.fromRGB(204, 93, 255)});
-                    chams:new_colorpicker({flag = 'esp_chams_color1', default = Color3.fromRGB(224, 144, 255)});
-                end;
-                players_general:new_toggle({name = "offscreen arrows", flag = 'esp_arrow'}):new_colorpicker({flag = 'esp_arrow_color', default = Color3.fromRGB(255,255,255)});
-                players_general:new_dropdown({name = "arrow indicators", flag = 'esp_arrow_indicator', options = {"Name","Distance","Weapon","Healthbar"}, max = 4});
-            end;
-            players_general:open();
-            --
-            local players_config = visuals_players:new_section({name = "configuration"}) do
-            end;
-        end;
-        --
-        local visuals_world = visuals:new_section_holder({name = "world", size = 150, side = "right"}) do
-            local world_general = visuals_world:new_section({name = "general"}) do
-                world_general:new_toggle({name = "projectiles", flag = 'world_projectiles'}):new_colorpicker({flag = 'projectiles_color', default = Color3.fromRGB(255,0,0)});
-            end;
-            world_general:open();
-            --
-            local world_lighting = visuals_world:new_section({name = "environment"}) do
-            end;
-        end;
-        --
-        local visuals_effects = visuals:new_section_holder({name = "effects", size = 165, side = "right"}) do
-            local effects_general = visuals_effects:new_section({name = "general"}) do
-                effects_general:new_toggle({name = "weapon chams", flag = 'effects_weapon'}):new_colorpicker({flag = 'weapon_color', default = Color3.fromRGB(61, 100, 227)});
-                effects_general:new_toggle({name = "arm chams", flag = 'effects_weapon'}):new_colorpicker({flag = 'arm_color', default = Color3.fromRGB(33, 64, 191)});
-            end;
-            effects_general:open();
-            --
-            local effects_removals = visuals_effects:new_section({name = "removals"}) do
-            end;
-        end;
+    
+    local Section = Tab:new_section({name = "Section", side = "right", size = "Fill"}) do
+        Section:new_toggle({name = "", flag = '', callback = function(v) end})
+
+        local Toggle = Section:new_toggle({name = "", flag = '', callback = function(v) end}) do
+            Toggle:new_colorpicker({name = "",flag = '', default = Color3.fromRGB(255,255,255), callback = function(v) end})
+        end
+        
+        Section:new_keybind({name = "", keybind_name = "", flag = '', mode = "Hold", default = Enum.UserInputType.MouseButton2, callback = function(v) end})
+        Section:new_slider({name = "", flag = '', min = 0, max = 100, default = 50, callback = function(v) end})
+        Section:new_dropdown({name = "", flag = '', options = {'1','2', '3'}, default = 'Head', callback = function(v) end})
+        Section:new_dropdown({name = "", flag = '', options = {'1','2','3'}, max = 3, callback = function(v) end})
+        Section:new_colorpicker({name = "",flag = '', default = Color3.fromRGB(255,255,255), callback = function(v) end})
+        Section:new_button({name = "", confirm = false, callback = function() end})
+        Section:new_seperator({name = ""})
     end;
+    
 end;
