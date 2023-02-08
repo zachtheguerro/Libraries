@@ -1,0 +1,28 @@
+local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/zachtheguerro/Libraries/main/splix/Lib'))()
+
+--Vars
+local pointers = Library.pointers
+
+local Window = Library:New({Name = "floyd solutions"})
+--
+local Main = Window:Page({Name = "Main"})
+
+local Mainsection = Main:Section({Name = "Main", Side = "Left"})
+
+section:Toggle({Name = "", Default = false, Pointer = "", Callback = function(v) end})
+section:Keybind({Name = "", Default = "", Pointer = "", Mode = "", KeybindName = "", Callback = function(v) end})
+section:Slider({Name = "", Minimum = 1, Maximum = 100, Default = 50, Decimals = 1.0, Suffix = "", Pointer = "", Callback = function(v) end})
+section:Colorpicker({Name = "", Info = "", Alpha = 0.25, Default = Color3.fromRGB(255, 255, 255), Pointer = "", Callback = function(v) end})
+section:Textbox({Pointer = "", PlaceHolder = "", Text = "", Middle = true, ResetOnFocus = false})
+section:Listbox({Pointer = "", List = {"1", "2", "3"}, Callback = function(v) end})
+section:Dropdown({Name = "", Options = {"1", "2", "3"}, Default = "", Pointer = "", Callback = function(v) end})
+section:Multibox({Name = "", Minimum = 1, Options = {"1", "2", "3"}, Default = {"1", "2"}, Pointer = "", Callback = function(v) end})
+section:Button({Name = "", Confirmation = false, Callback = function() end})
+section:ButtonHolder({Buttons = {{"1", function() end}, {"2", function() end}}})
+section:Label({Name = "", Middle = true, Pointer = ""})
+
+Window:Initialize()
+
+pointers[""]:get()
+pointers["keybind"]:is_active()
+table.find(pointers["multibox"]:get(), "what_u_want")
