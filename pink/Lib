@@ -3179,28 +3179,24 @@ end;
         theme_pickers["Text"] = accent:new_colorpicker({name = "text",flag = 'theme_text', default = default_theme["Text"], callback = function(state) library:ChangeThemeOption("Text", state) end})
         theme_pickers["Risky Text"] = accent:new_colorpicker({name = "risky text",flag = 'theme_risky', default = default_theme["Risky Text"], callback = function(state) library:ChangeThemeOption("Risky Text", state) end})
         theme_pickers["Object Background"] = accent:new_colorpicker({name = "element background",flag = 'theme_element', default = default_theme["Object Background"], callback = function(state) library:ChangeThemeOption("Object Background", state) end})
-        accent:new_dropdown({flag = "settings/menu/effects", name = "accent effects", options = {"None", "rainbow", "shift"}, default = "none"});
+        accent:new_dropdown({flag = "settings/menu/effects", name = "accent effects", options = {"None", "Rainbow", "Shift"}, default = "none"});
         accent:new_slider({flag = "settings/menu/effect_speed", name = "effect speed", min = 0.1, max = 2, default = 1, float = 0.1})
         game:GetService("RunService").Heartbeat:Connect(function()
             local AccentEffect = library.flags["settings/menu/effects"];
             local EffectSpeed = library.flags["settings/menu/effect_speed"];
-            if AccentEffect == "rainbow" then
+            if AccentEffect == "Rainbow" then
                 local Clock = os.clock() * EffectSpeed
                 local Color = Color3.fromHSV(math.abs(math.sin(Clock)), 1, 1);
                 library.flags["theme_accent"] = Color;
                 library:ChangeThemeOption("Accent", Color);
-                library.flags["theme_text"] = Color;
-                library:ChangeThemeOption("Text", Color);
             end;
-            if AccentEffect == "shift" then
+            if AccentEffect == "Shift" then
                 local ShiftOffset = 0
                 local Clock = os.clock() * EffectSpeed + ShiftOffset;
                 ShiftOffset = ShiftOffset + 0.01;
-                local Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(0.25, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(0.26, Color3.fromRGB(191, 255, 107)), ColorSequenceKeypoint.new(0.65, Color3.fromRGB(191, 255, 107)), ColorSequenceKeypoint.new(0.66, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 255, 255))}--Color3.fromHSV(math.abs(math.sin(Clock)), 1, 1)
+                local Color = Color3.fromHSV(math.abs(math.sin(Clock)), 1, 1)
                 library.flags["theme_accent"] = Color;
                 library:ChangeThemeOption("Accent", Color);
-                library.flags["theme_text"] = Color;
-                library:ChangeThemeOption("Text", Color);
             end;
         end);
         --
