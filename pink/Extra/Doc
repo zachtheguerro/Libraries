@@ -17,7 +17,7 @@ do
     end
 
     Section:new_keybind({name = "", keybind_name = "", flag = '', mode = "Hold", default = Enum.UserInputType.MouseButton2, callback = function(v) end})
-    Section:new_slider({name = "", flag = '', min = 0, max = 100, default = 50, callback = function(v) end})
+    Section:new_slider({name = "", flag = '', min = 0, max = 100, default = 50, float = 0.1, callback = function(v) end})
     Section:new_dropdown({name = "", flag = '', options = {'1','2', '3'}, default = 'Head', callback = function(v) end})
     Section:new_dropdown({name = "", flag = '', options = {'1','2','3'}, max = 3, callback = function(v) end})
     Section:new_colorpicker({name = "",flag = '', default = Color3.fromRGB(255,255,255), callback = function(v) end})
