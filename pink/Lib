@@ -2185,7 +2185,7 @@ function library:new_window(cfg)
                     utility.create("Image", {Data = library.gradient, Transparency = 0.5, Visible = true, Parent = multi_button, Size = UDim2.new(1,0,1,0), ZIndex = 7});
                 end;
                 --
-                local multi_title = utility.create("Text", {Text = name, Parent = multi_button, Visible = true, Transparency = 1, Theme = "Text", Size = 13, Center = true, Outline = false, Font = Drawing.Fonts.Plex, Position = UDim2.new(0.5,0,0,8), ZIndex = 7});
+                local multi_title = utility.create("Text", {Text = name, Parent = multi_button, Visible = true, Transparency = 1, Theme = "Text", Size = 13, Center = true, Outline = false, Font = Drawing.Fonts.Plex, Position = UDim2.new(0.5,0,0,6), ZIndex = 7});
                 --
                 local multi_button_accent = utility.create("Square", {Parent = multi_button, Visible = false, Transparency = 1, Theme = "Accent", Size = UDim2.new(1,0,0,1), Position = UDim2.new(0,0,0,1), Thickness = 1, Filled = true, ZIndex = 7}) do
                     table.insert(section_tbl.accents, multi_button_accent);
