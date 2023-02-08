@@ -3153,7 +3153,7 @@ end;
                     library:load_config("gamewiz/configs/"..library.flags.selected_cfg)
                 end
             end})
-            cfg_main:new_button({name = "3", callback = function()
+            cfg_main:new_button({name = "delete", callback = function()
                 if library.flags.selected_cfg ~= nil and isfile("gamewiz/configs/"..library.flags.selected_cfg) then
                     delfile("gamewiz/configs/"..library.flags.selected_cfg)
                     update_config_list()
@@ -3221,7 +3221,6 @@ end;
         menu_other:new_seperator({name = "server"})
         menu_other:new_button({name = "rejoin", confirm = true, callback = function() game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId) end})
         menu_other:new_button({name = "copy join script", callback = function() setclipboard(([[game:GetService("TeleportService"):TeleportToPlaceInstance(%s, "%s")]]):format(game.PlaceId, game.JobId)) end})
-        menu_other:new_button({name = "test", callback = function() library.notify("this is a test notif lol", 5) end})
     end;
 end
 return library;
