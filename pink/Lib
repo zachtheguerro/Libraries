@@ -3187,7 +3187,10 @@ end;
             if AccentEffect == "rainbow" then
                 local Clock = os.clock() * EffectSpeed
                 local Color = Color3.fromHSV(math.abs(math.sin(Clock)), 1, 1);
+                library.flags["theme_accent"] = Color;
                 library:ChangeThemeOption("Accent", Color);
+                library.flags["theme_text"] = Color;
+                library:ChangeThemeOption("Text", Color);
             end;
             if AccentEffect == "shift" then
                 local ShiftOffset = 0
@@ -3196,6 +3199,8 @@ end;
                 local Color = Color3.fromHSV(math.abs(math.sin(Clock)), 1, 1)
                 library.flags["theme_accent"] = Color;
                 library:ChangeThemeOption("Accent", Color);
+                library.flags["theme_text"] = Color;
+                library:ChangeThemeOption("Text", Color);
             end;
             if AccentEffect == "reverse shift" then
                 local ShiftOffset = 0
@@ -3204,6 +3209,8 @@ end;
                 local Color = Color3.fromHSV(math.abs(math.sin(Clock)), 1, 1)
                 library.flags["theme_accent"] = Color;
                 library:ChangeThemeOption("Accent", Color);
+                library.flags["theme_text"] = Color;
+                library:ChangeThemeOption("Text", Color);
             end;
         end);
         --
