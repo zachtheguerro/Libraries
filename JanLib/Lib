@@ -9,7 +9,7 @@ end
 
 local library = {tabs = {}, draggable = true, flags = {}, title = 'Osmodius', open = false, mousestate = true, popup = nil, instances = {}, connections = {}, options = {}, notifications = {}, tabSize = 0, theme = {}, foldername = 'osmodius_configs', fileext = '.os'}
 getgenv().library = library
-getgenv().loaded = true
+getgenv().loaded = false
 
 --Locals
 local dragging, dragInput, dragStart, startPos, dragObject
