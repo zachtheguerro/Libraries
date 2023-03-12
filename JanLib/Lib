@@ -8,8 +8,7 @@ getgenv().library:Unload()
 end
 
 local library = {tabs = {}, draggable = true, flags = {}, title = 'Osmodius', open = false, mousestate = true, popup = nil, instances = {}, connections = {}, options = {}, notifications = {}, tabSize = 0, theme = {}, foldername = 'osmodius_configs', fileext = '.os'}
-getgenv().library = library
-getgenv().loaded = true
+getgenv().library = library; getgenv().loaded = true
 
 --Locals
 local dragging, dragInput, dragStart, startPos, dragObject
@@ -88,72 +87,76 @@ getgenv().library = nil
 end
 
 function library:LoadConfig(config)
-if table.find(self:GetConfigs(), config) then
-    local Read, Config = pcall(function() return game:GetService"HttpService":JSONDecode(readfile(self.foldername .. "/" .. config .. self.fileext)) end)
-    Config = Read and Config or {}
-    for _, option in next, self.options do
-        if option.hasInit then
-            if option.type ~= "button" and option.flag and not option.skipflag then
-                if option.type == "toggle" then
-                    spawn(function() option:SetState(Config[option.flag] == 1) end)
-                elseif option.type == "color" then
-                    if Config[option.flag] then
-                        spawn(function() option:SetColor(Config[option.flag]) end)
-                        if option.trans then
-                            spawn(function() option:SetTrans(Config[option.flag .. " Transparency"]) end)
+    if table.find(self:GetConfigs(), config) then
+        local Read, Config = pcall(function() return game:GetService"HttpService":JSONDecode(readfile(self.foldername .. "/" .. config .. self.fileext)) end)
+        Config = Read and Config or {}
+        for _, option in next, self.options do
+            if option.hasInit then
+                if option.type ~= "button" and option.flag and not option.skipflag then
+                    if option.type == "toggle" then
+                        spawn(function() option:SetState(Config[option.flag] == 1) end)
+                    elseif option.type == "color" then
+                        if Config[option.flag] then
+                            spawn(function() option:SetColor(Config[option.flag]) end)
+                            if option.trans then
+                                spawn(function() option:SetTrans(Config[option.flag .. " Transparency"]) end)
+                            end
                         end
+                    elseif option.type == "bind" then
+                        spawn(function() option:SetKey(Config[option.flag]) end)
+                    else
+                        spawn(function() option:SetValue(Config[option.flag]) end)
                     end
-                elseif option.type == "bind" then
-                    spawn(function() option:SetKey(Config[option.flag]) end)
-                else
-                    spawn(function() option:SetValue(Config[option.flag]) end)
                 end
             end
         end
     end
 end
-end
 
 function library:SaveConfig(config)
-local Config = {}
-if table.find(self:GetConfigs(), config) then
-    Config = game:GetService"HttpService":JSONDecode(readfile(self.foldername .. "/" .. config .. self.fileext))
-end
-for _, option in next, self.options do
-    if option.type ~= "button" and option.flag and not option.skipflag then
-        if option.type == "toggle" then
-            Config[option.flag] = option.state and 1 or 0
-        elseif option.type == "color" then
-            Config[option.flag] = {option.color.r, option.color.g, option.color.b}
-            if option.trans then
-                Config[option.flag .. " Transparency"] = option.trans
-            end
-        elseif option.type == "bind" then
-            if option.key ~= "none" then
-                Config[option.flag] = option.key
+    local Config = {}
+    if table.find(self:GetConfigs(), config) then
+        Config = game:GetService"HttpService":JSONDecode(readfile(self.foldername .. "/" .. config .. self.fileext))
+    end
+    for _, option in next, self.options do
+        if option.type ~= "button" and option.flag and not option.skipflag then
+            if option.type == "toggle" then
+                Config[option.flag] = option.state and 1 or 0
+            elseif option.type == "color" then
+                Config[option.flag] = {option.color.r, option.color.g, option.color.b}
+                if option.trans then
+                    Config[option.flag .. " Transparency"] = option.trans
+                end
+            elseif option.type == "bind" then
+                if option.key ~= "none" then
+                    Config[option.flag] = option.key
+                end
+            elseif option.type == "list" then
+                Config[option.flag] = option.value
+            else
+                Config[option.flag] = option.value
             end
         end
     end
-end
-writefile(self.foldername .. "/" .. config .. self.fileext, game:GetService"HttpService":JSONEncode(Config))
+    writefile(self.foldername .. "/" .. config .. self.fileext, game:GetService"HttpService":JSONEncode(Config))
 end
 
 function library:GetConfigs()
-if not isfolder(self.foldername) then
-    makefolder(self.foldername)
-    return {}
-end
-local files = {}
-local a = 0
-for i,v in next, listfiles(self.foldername) do
-    if v:sub(#v - #self.fileext + 1, #v) == self.fileext then
-        a = a + 1
-        v = v:gsub(self.foldername .. "\\", "")
-        v = v:gsub(self.fileext, "")
-        table.insert(files, a, v)
+    if not isfolder(self.foldername) then
+        makefolder(self.foldername)
+        return {}
     end
-end
-return files
+    local files = {}
+    local a = 0
+    for i,v in next, listfiles(self.foldername) do
+        if v:sub(#v - #self.fileext + 1, #v) == self.fileext then
+            a = a + 1
+            v = v:gsub(self.foldername .. "\\", "")
+            v = v:gsub(self.fileext, "")
+            table.insert(files, a, v)
+        end
+    end
+    return files
 end
 
 library.createLabel = function(option, parent)
@@ -1753,7 +1756,7 @@ function tab:AddColumn()
     local column = {sections = {}, position = #self.columns, canInit = true, tab = self}
     table.insert(self.columns, column)
 
-    function column:AddSection(title)
+    function column:AddSection(title, sectionsize)
         local section = {title = tostring(title), options = {}, canInit = true, column = self}
         table.insert(self.sections, section)
 
@@ -2166,7 +2169,7 @@ function tab:AddColumn()
             })
 
             layout.Changed:Connect(function()
-                self.main.Size = UDim2.new(1, 0, 0, layout.AbsoluteContentSize.Y + 16)
+                self.main.Size = sectionsize ~= nil and UDim2.new(1, 0, 0, (layout.AbsoluteContentSize.Y + 16) + sectionsize) or  UDim2.new(1, 0, 0, layout.AbsoluteContentSize.Y + 16)
             end)
 
             for _, option in next, self.options do
@@ -2508,13 +2511,10 @@ if self.hasInit then return end
 self.hasInit = true
 
 self.base = library:Create("ScreenGui", {IgnoreGuiInset = true, ZIndexBehavior = Enum.ZIndexBehavior.Global})
-if runService:IsStudio() then
-    self.base.Parent = script.Parent.Parent
-elseif syn then
-    pcall(function() gethui(self.base) end)
-    self.base.Parent = game:GetService"CoreGui"
-    syn.protect_gui(self.base)
-end
+pcall(function() gethui(self.base) end)
+self.base.Parent = game:GetService"CoreGui"
+syn.protect_gui(self.base)
+
 
 self.main = self:Create("ImageButton", {
     AutoButtonColor = false,
