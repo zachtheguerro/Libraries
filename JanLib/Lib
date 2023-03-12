@@ -132,10 +132,6 @@ for _, option in next, self.options do
             if option.key ~= "none" then
                 Config[option.flag] = option.key
             end
-        elseif option.type == "list" then
-            --Config[option.flag] = option.value
-        else
-            Config[option.flag] = option.value
         end
     end
 end
