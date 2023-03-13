@@ -13,3 +13,5 @@ Section:AddSlider{text = "", flag = "", min = 0, max = 100, value = 50, suffix =
 Section:AddBox({text = "", flag = "", value = "", callback = function(text) end});
 
 library:Init();
+
+library.options[""].main.Visible = true
