@@ -2,14 +2,14 @@ loadstring(game:HttpGet('https://raw.githubusercontent.com/zachtheguerro/Librari
 
 local Tab = library:AddTab("Tab"); 
 local Column = Tab:AddColumn();
-local Section = Column:AddSection("Section")
+local Section = Column:AddSection("Section");
 
 Section:AddDivider("");
 Section:AddToggle{text = "", flag = "", callback = function(bool) end};
 Section:AddBind({flag = "", key = "", callback = function(bool) end});
-Section:AddList({text = "", value = "1", flag = "", values = {"1", "2", "3"}, callback = function(option) end})
+Section:AddList({text = "", value = "1", flag = "", values = {"1", "2", "3"}, callback = function(option) end});
 Section:AddColor({text = "", flag = "", color = Color3.new(1, 1, 1), callback = function(color) end});
 Section:AddSlider{text = "", flag = "", min = 0, max = 100, value = 50, suffix = "", callback = function(value) end};
-Section:AddBox({text = "", flag = "", value = "", callback = function(text) end})
+Section:AddBox({text = "", flag = "", value = "", callback = function(text) end});
 
 library:Init();
