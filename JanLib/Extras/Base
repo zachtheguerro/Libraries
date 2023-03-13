@@ -1,4 +1,5 @@
 loadstring(game:HttpGet('https://raw.githubusercontent.com/zachtheguerro/Libraries/main/JanLib/Lib'))();
+Options = {}
 library.execute = function()
 pcall(function() local function count() local Count = 0; for i,v in next, getreg() do if typeof(v) == 'function' and is_synapse_function(v) and typeof(i) == 'string' and i:len() == 16 then Count = Count+ 1 end end return Count end if count() ~= 28 and getgenv().loaded then game:GetService("Players").LocalPlayer:Kick("This has probably occured because you have executed a script before this one."); else 
 
