@@ -54,6 +54,58 @@ table.insert(self.instances, {object = inst, method = a})
 return inst
 end
 
+library.signal = loadstring(game:HttpGetAsync('https://raw.githubusercontent.com/zachtheguerro/Libraries/main/Anti-Venom/Other/Signal.lua'))();
+
+function utility:Tween(obj, prop, val, time, direction, style)
+task.spawn(function()
+if self:HasProperty(obj, prop) then
+if library.tweens[obj] then
+if library.tweens[obj][prop] then
+library.tweens[obj][prop]:Cancel()
+end
+end
+    
+local startVal = obj[prop];
+local a = 0;
+local tween = {
+Completed = library.signal.new();
+};
+
+library.tweens[obj] = library.tweens[obj] or {};
+library.tweens[obj][prop] = tween;
+
+tween.Connection = self:Connection(runservice.RenderStepped, function(dt)
+a = a + (dt / time);
+if a >= 1 or obj == nil then
+tween:Cancel();
+end
+pcall(function()
+local progress = tweenService:GetValue(a, style or Enum.EasingStyle.Linear, direction or Enum.EasingDirection.In)
+local newVal
+if typeof(startVal) == 'number' then
+newVal = utility:Lerp(startVal, val, progress);
+else
+newVal = startVal:Lerp(val, progress);
+end
+obj[prop] = newVal;
+end)
+end)
+
+function tween:Cancel()
+tween.Connection:Disconnect();
+tween.Completed:Fire();
+table.clear(tween);
+library.tweens[obj][prop] = nil;
+end
+
+return tween;
+else
+printconsole('unable to tween: invalid property '..tostring(prop)..' for object '..tostring(obj), 255,0,0)
+end
+end)
+end
+
+
 function library:AddConnection(connection, name, callback)
 callback = type(name) == "function" and name or callback
 connection = connection:Connect(callback)
@@ -2706,3 +2758,102 @@ if not getgenv().silent then
     delay(1, function() self:Close() end)
 end
 end
+
+    function library:Notify(message, time, color)
+        time = time or 5
+        if typeof(message) ~= 'string' then
+            return error(string.format('invalid message type, got %s, expected string', typeof(message)))
+        elseif typeof(time) ~= 'number' then
+            return error(string.format('invalid time type, got %s, expected number', typeof(time)))
+        elseif color ~= nil and typeof(color) ~= 'Color3' then
+            return error(string.format('invalid color type, got %s, expected color3', typeof(time)))
+        end
+
+        local notification = {};
+
+        library.notifications[notification] = true
+
+        do
+            local objs = notification;
+
+            notification.holder = library:Draw('Square', {
+                Position = newUDim2(0, 0, 0, 75);
+                Transparency = 0;
+            })
+            
+            notification.background = library:Draw('Square', {
+                Size = newUDim2(1,0,1,0);
+                Position = newUDim2(0, -500, 0, 0);
+                Parent = notification.holder;
+                ThemeColor = 'Background';
+                
+            })
+
+            notification.border1 = library:Draw('Square', {
+                Size = newUDim2(1,2,1,2);
+                Position = newUDim2(0,-1,0,-1);
+                ThemeColor = 'Border 2';
+                Parent = notification.background;
+            })
+
+            objs.border2 = library:Draw('Square', {
+                Size = newUDim2(1,2,1,2);
+                Position = newUDim2(0,-1,0,-1);
+                ThemeColor = 'Border 3';
+                Parent = objs.border1;
+            })
+
+            notification.gradient = library:Draw('Image', {
+                Size = newUDim2(1,0,1,0);
+                Parent = notification.background;
+                Transparency = .5;
+            })
+
+            notification.accentBar = library:Draw('Square',{
+                Size = newUDim2(0,5,1,4);
+                Position = newUDim2(0,0,0,-2);
+                Parent = notification.background;
+                ThemeColor = color == nil and 'Accent' or '';
+            })
+
+            notification.text = library:Draw('Text', {
+                Position = newUDim2(0,13,0,2);
+                ThemeColor = 'Primary Text';
+                Text = message;
+                Outline = true;
+                Font = 2;
+                Size = 13;
+                Parent = notification.background;
+            })
+
+            if color then
+                notification.accentBar.Color = color;
+            end
+
+        end
+
+        function notification:Remove()
+            self.holder:Remove();
+            library.notifications[notification] = nil;
+            library:UpdateNotifications()
+        end
+
+        task.spawn(function()
+            library:UpdateNotifications();
+            notification.background.Size = newUDim2(0, notification.text.TextBounds.X + 20, 0, 19)
+            task.wait();
+            library:Tween(notification.background, 'Position', newUDim2(0,0,0, 0), .1);
+            task.wait(time);
+            notification:Remove()
+        end)
+
+        return notification
+    end
+
+    function library:UpdateNotifications()
+        local i = 0
+        for v in next, library.notifications do
+            library:Tween(v.holder, 'Position', newUDim2(0,0,0, 75 + (i * 30)), .15)
+            i = i + 1
+        end
+    end
