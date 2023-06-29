@@ -1694,14 +1694,14 @@ function library:notify(info)
     --
     local holder = library:Create('Frame', {
         Position = UDim2.new(0, 19, 0, 75);
-        BackGroundTransparency = 0;
+        BackgroundTransparency = 0;
     })
     --
     local background = library:create('Frame', {
         Size = UDim2.new(0, utility.textlength(title, 2, 13).X + 5, 0, 19);
         Position = UDim2.new(0, -500, 0, 0);
         Parent = holder;
-        Color = Color3.fromRGB(13,13,13);
+        BackgroundColor3 = Color3.fromRGB(13,13,13);
     })
     --
     --local outline1 = library:outline(background, Color3.fromRGB(44,44,44), z, true);
@@ -1709,7 +1709,7 @@ function library:notify(info)
     --
     --local line = library:create("BillBoard", {Parent = background, Visible = true, Transparency = 1, Theme = "Accent", Size = UDim2.new(1,0,0,1), Position = UDim2.new(0,0,0,0), Thickness = 1, Filled = true, ZIndex = 11});
     --
-    local notiftext = library:create("Text", {Text = title, Parent = background, Visible = true, Transparency = 1, Theme = "Text", Position = UDim2.new(0,3,0,2)});
+    local notiftext = library:create("TextLabel", {Text = title, Parent = background, Visible = true, Transparency = 0, TextColor3 = Color3.new(255,255,255), Position = UDim2.new(0,3,0,2)});
     --
     function ntif.dismiss(self)
         local goaway = tweenService:Create(ntif.instances[2], TweenInfo.new(0.2, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Position = UDim2.new(0,-500,0,0)}):Play()
@@ -1723,8 +1723,11 @@ function library:notify(info)
         library.notiflist.reposition(true)
     end
     
-    background.MouseButton1Click:Connect(ntif.dismiss)
-    
+    background.InputBegan:connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+		ntif.dissmiss()
+	end
+    end)
     task.spawn(function()
         if type(time) == "number" then
             task.wait(time)
