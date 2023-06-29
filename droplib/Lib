@@ -1687,4 +1687,81 @@ inputService.InputChanged:connect(function(input)
 	end
 end)
 
+function library:notify(info)
+    local ntif = {instances = {},create_tick = tick()};
+    local title = info.text or info.Text or "nil";
+    local time = info.time or info.Time or "inf";
+    --
+    local holder = library:Create('Frame', {
+        Position = UDim2.new(0, 19, 0, 75);
+        BackGroundTransparency = 0;
+    })
+    --
+    local background = library:create('Frame', {
+        Size = UDim2.new(0, utility.textlength(title, 2, 13).X + 5, 0, 19);
+        Position = UDim2.new(0, -500, 0, 0);
+        Parent = holder;
+        Color = Color3.fromRGB(13,13,13);
+    })
+    --
+    --local outline1 = library:outline(background, Color3.fromRGB(44,44,44), z, true);
+    --local outline2 = library:outline(outline1, Color3.fromRGB(0,0,0), z, true);
+    --
+    --local line = library:create("BillBoard", {Parent = background, Visible = true, Transparency = 1, Theme = "Accent", Size = UDim2.new(1,0,0,1), Position = UDim2.new(0,0,0,0), Thickness = 1, Filled = true, ZIndex = 11});
+    --
+    local notiftext = library:create("Text", {Text = title, Parent = background, Visible = true, Transparency = 1, Theme = "Text", Position = UDim2.new(0,3,0,2)});
+    --
+    function ntif.dismiss(self)
+        local goaway = tweenService:Create(ntif.instances[2], TweenInfo.new(0.2, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Position = UDim2.new(0,-500,0,0)}):Play()
+
+        task.wait(0.2)
+
+        ntif.instances[1] = nil
+
+        table.remove(library.notiflist.ntifs, table.find(library.notiflist.ntifs, ntif))
+
+        library.notiflist.reposition(true)
+    end
+    
+    background.MouseButton1Click:Connect(ntif.dismiss)
+    
+    task.spawn(function()
+        if type(time) == "number" then
+            task.wait(time)
+            ntif.dismiss()
+        end
+    end)
+
+    ntif.instances = {holder, background, outline1, outline2, line, notiftext}
+
+    table.insert(library.notiflist.ntifs, ntif)
+
+    function library.notiflist.reposition(isleaving)
+        local position_to_go = 60 + 12
+        for i, v in pairs(library.notiflist.ntifs) do
+            local position = UDim2.new(0,19,0,position_to_go)
+
+            local lerp_table = {Position = position}
+            local valuestring = tostring(v.instances[1].Position.X.Offset);
+
+            if tonumber(valuestring) < 0 then
+                v.instances[1].Position = position + UDim2.new(0,-4, 0,7)
+            end
+
+            if isleaving then
+                tweenService:Create(v.instances[1], TweenInfo.new(0.2, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Position = lerp_table.Position}):Play()
+            else
+                v.instances[1].Position = lerp_table.Position
+                tweenService:Create(v.instances[2], TweenInfo.new(0.2, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Position = UDim2.new(0,0,0,0)}):Play()
+            end
+
+            position_to_go = position_to_go + v.instances[1].Size.Y + 12
+        end
+
+    end
+    
+    library.notiflist.reposition()
+    
+end;
+
 return library;
