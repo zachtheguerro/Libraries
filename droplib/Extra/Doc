@@ -1,5 +1,5 @@
 --Start Lib
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/zachtheguerro/droplib/main/Lib"))();
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/zachtheguerro/Libraries/main/droplib/Lib"))();
 
 --New WIndow
 local MainWindow = Library:CreateWindow("Main");
