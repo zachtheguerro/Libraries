@@ -272,19 +272,19 @@ do
     end
     --
     function utility:Connection(connectionType, connectionCallback)
-        local connection = connectionType:Connect(connectionCallback)
-        library.connections[#library.connections + 1] = connection
-        --
-        return connection
+    	local connection = signal:Connect(callback)
+    	table.insert(library.connections, connection)
+
+    	return connection
     end
     --
     function utility:Disconnect(connection)
-        for i,v in pairs(library.connections) do
-            if v == connection then
-                library.connections[i] = nil
-                v:Disconnect()
-            end
-        end
+    	local index = table.find(library.connections, connection)
+    	connection:Disconnect()
+
+    	if index then
+    	    table.remove(library.connections, index)
+    	end
     end
     --
     function utility:MouseLocation()
