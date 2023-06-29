@@ -5,6 +5,7 @@ local runService = game:GetService"RunService"
 local tweenService = game:GetService"TweenService"
 local textService = game:GetService"TextService"
 local inputService = game:GetService"UserInputService"
+local textService = game:GetService"TextService"
 
 --Locals
 local dragging, dragInput, dragStart, startPos, dragObject
@@ -72,6 +73,11 @@ function library:Disconnect(connection)
     if index then
         table.remove(library.connections, index)
     end
+end;
+
+function library:GetTextBounds(Text, Font, Size, Resolution)
+    local Bounds = TextService:GetTextSize(Text, Size, Font, Resolution or Vector2.new(1920, 1080))
+    return Bounds.X, Bounds.Y
 end;
 
 local function createOptionHolder(holderTitle, parent, parentTable, subHolder)
@@ -1692,13 +1698,15 @@ function library:notify(info)
     local title = info.text or info.Text or "nil";
     local time = info.time or info.Time or "inf";
     --
+    local XSize, YSize = Library:GetTextBounds(title, Enum.Font.Code, 13);
+
     local holder = library:Create('Frame', {
         Position = UDim2.new(0, 19, 0, 75);
         BackgroundTransparency = 0;
     })
     --
     local background = library:create('Frame', {
-        Size = UDim2.new(0, utility.textlength(title, 2, 13).X + 5, 0, 19);
+        Size = UDim2.new(0, XSize + 5, 0, 19);
         Position = UDim2.new(0, -500, 0, 0);
         Parent = holder;
         BackgroundColor3 = Color3.fromRGB(13,13,13);
