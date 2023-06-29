@@ -1,4 +1,4 @@
-local library = {flags = {}, windows = {}, open = true}
+local library = {flags = {}, windows = {}, connections = {}, open = true}
 
 --Services
 local runService = game:GetService"RunService"
@@ -57,6 +57,22 @@ function library:Create(class, properties)
 	end
 	return inst
 end
+
+function library:Connect(signal, callback)
+    local connection = signal:Connect(callback)
+    table.insert(library.connections, connection)
+
+    return connection
+end;
+
+function library:Disconnect(connection)
+    local index = table.find(library.connections, connection)
+    connection:Disconnect()
+
+    if index then
+        table.remove(library.connections, index)
+    end
+end;
 
 local function createOptionHolder(holderTitle, parent, parentTable, subHolder)
 	local size = subHolder and 34 or 40
