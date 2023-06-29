@@ -1698,7 +1698,7 @@ function library:notify(info)
     local title = info.text or info.Text or "nil";
     local time = info.time or info.Time or "inf";
     --
-    local XSize, YSize = Library:GetTextBounds(title, Enum.Font.Code, 13);
+    local XSize, YSize = library:GetTextBounds(title, Enum.Font.Code, 13);
 
     local holder = library:Create('Frame', {
         Position = UDim2.new(0, 19, 0, 75);
