@@ -271,7 +271,7 @@ do
         return var
     end
     --
-    function utility:Connection(connectionType, connectionCallback)
+    function utility:Connection(signal, callback)
     	local connection = signal:Connect(callback)
     	table.insert(library.connections, connection)
 
