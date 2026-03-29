@@ -100,6 +100,22 @@ local function createOptionHolder(holderTitle, parent, parentTable, subHolder)
 		ClipsDescendants = true,
 		Parent = parent
 	})
+
+	inputService.InputChanged:Connect(function(input)
+		if not library then return end
+		if input == dragInput and dragging and dragObject then
+			update(input)
+		end
+	end)
+	
+	inputService.InputEnded:Connect(function(input)
+	if not library then return end
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			dragging = false
+			dragInput = nil
+			dragObject = nil
+		end
+	end)
 	
 	local round
 	if not subHolder then
