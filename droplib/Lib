@@ -1720,4 +1720,5 @@ inputService.InputChanged:connect(function(input)
 	end
 end)
 
+getgenv().library = library
 return library;
