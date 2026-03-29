@@ -46,6 +46,7 @@ local chromaColor
 local rainbowTime = 5
 spawn(function()
 	while wait() do
+        if not library then break end
 		chromaColor = Color3.fromHSV(tick() % rainbowTime / rainbowTime, 1, 1)
 	end
 end)
@@ -1674,7 +1675,7 @@ function library:Unload()
 		end
 	end
 
-	getgenv().library = nil
+	library = nil
 end
 
 function library:Close()
