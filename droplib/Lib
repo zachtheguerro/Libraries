@@ -1,3 +1,7 @@
+if getgenv().library ~= nil then
+    getgenv().library:Unload();
+end
+
 local library = {flags = {}, windows = {}, connections = {}, open = true}
 
 --Services
