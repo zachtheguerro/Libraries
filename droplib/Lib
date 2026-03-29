@@ -655,16 +655,32 @@ local function createSlider(option, parent)
 		option:SetValue(tonumber(inputvalue.Text) or option.value)
 	end)
 
-	function option:SetValue(value)
+	function option:SetValue(value, instant)
 		value = round(value, option.float)
 		value = math.clamp(value, self.min, self.max)
-		circle:TweenPosition(UDim2.new((value - self.min) / (self.max - self.min), 0, 0.5, 0), "Out", "Quad", 0.1, true)
-		if self.min >= 0 then
-			fill:TweenSize(UDim2.new((value - self.min) / (self.max - self.min), 0, 1, 0), "Out", "Quad", 0.1, true)
+	
+		local percent = (value - self.min) / (self.max - self.min)
+	
+		if instant then
+			circle.Position = UDim2.new(percent, 0, 0.5, 0)
+	
+			if self.min >= 0 then
+				fill.Size = UDim2.new(percent, 0, 1, 0)
+			else
+				fill.Position = UDim2.new((0 - self.min) / (self.max - self.min), 0, 0, 0)
+				fill.Size = UDim2.new(value / (self.max - self.min), 0, 1, 0)
+			end
 		else
-			fill:TweenPosition(UDim2.new((0 - self.min) / (self.max - self.min), 0, 0, 0), "Out", "Quad", 0.1, true)
-			fill:TweenSize(UDim2.new(value / (self.max - self.min), 0, 1, 0), "Out", "Quad", 0.1, true)
+			circle:TweenPosition(UDim2.new(percent, 0, 0.5, 0), "Out", "Quad", 0.1, true)
+	
+			if self.min >= 0 then
+				fill:TweenSize(UDim2.new(percent, 0, 1, 0), "Out", "Quad", 0.1, true)
+			else
+				fill:TweenPosition(UDim2.new((0 - self.min) / (self.max - self.min), 0, 0, 0), "Out", "Quad", 0.1, true)
+				fill:TweenSize(UDim2.new(value / (self.max - self.min), 0, 1, 0), "Out", "Quad", 0.1, true)
+			end
 		end
+	
 		library.flags[self.flag] = value
 		self.value = value
 		inputvalue.Text = value
