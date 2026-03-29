@@ -1655,6 +1655,28 @@ function library:Init()
 	end
 end
 
+function library:Unload()
+	for k, _ in pairs(self.flags) do
+		self.flags[k] = false
+	end
+
+	for i, connection in ipairs(self.connections) do
+		if connection and connection.Disconnect then
+			connection:Disconnect()
+		end
+	end
+	table.clear(self.connections)
+
+	for _, window in next, self.windows do
+		if window.canInit and window.init then
+			window.init = false
+            self.base:Destroy()
+		end
+	end
+
+	getgenv().library = nil
+end
+
 function library:Close()
 	self.open = not self.open
 	self.cursor.Visible = self.open
