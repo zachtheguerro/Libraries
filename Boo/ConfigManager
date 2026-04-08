@@ -1,3 +1,5 @@
+local HttpService = cloneref(game:GetService("HttpService"));
+
 local ConfigManager = {}
 ConfigManager.Items = {}
 ConfigManager.Folder = ""
