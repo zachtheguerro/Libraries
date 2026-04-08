@@ -3,11 +3,15 @@ local window = library:new({title = "Boo Hub 👻"})
 local Tab = window:tab({name = "Tab"})
 
 Tab:toggle({name = "Toggle", state = false, tooltip = "This is a toggle.", callback = function(Value) end}):keybind({tooltip = "This is a keybind.", list = true, sync = true})
+
 Tab:separator({name = "Separator"})
-local label = Tab:label({name = "Colorpicker", tooltip = "This is a label."})
-label:colorpicker({color = Color3.fromRGB(math.random(0,255), math.random(0,255), math.random(0,255)), alpha = 0, tooltip = "This is a colorpicker.", callback = function(Color, Alpha) end})
-label:colorpicker({color = Color3.fromRGB(math.random(0,255), math.random(0,255), math.random(0,255)), tooltip = "This is a colorpicker.", callback = function(Color) end})
+
+Tab:label({name = "Colorpicker", tooltip = "This is a label."}):colorpicker({color = Color3.fromRGB(math.random(0,255), math.random(0,255), math.random(0,255)), alpha = 0, tooltip = "This is a colorpicker.", callback = function(Color, Alpha) end})
+
 Tab:slider({name = "Slider", tooltip = "This is a slider.", default = 0, min = 0, max = 100, float = 1, suffix = "m", callback = function(Value) end})
+
 Tab:button({name = "Button", tooltip = "This is a button.", callback = function() end})
+
 Tab:dropdown({name = "Dropdown", tooltip = "This is a dropdown.", options = {"1","2","3","4","5","6","7","8","9","10"}, default = {"1","2","3"}, max = 3, callback = function(Value) end})
+
 Tab:textbox({name = "Textbox", tooltip = "This is a textbox.", callback = function(Value) end})
