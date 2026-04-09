@@ -1,3 +1,5 @@
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/zachtheguerro/Libraries/refs/heads/main/Boo/Lib"))()
+
 local window = library:new({title = "Boo Hub 👻"})
 
 local Tab = window:tab({name = "Tab"})
