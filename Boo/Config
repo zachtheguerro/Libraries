@@ -2,22 +2,22 @@
 local Config = window:tab({name = "Config"})
 
 local cfgname = Config:textbox({name = "Config Name", flag = "cfgname", callback = function() end})
-local cfglist = Config:dropdown({name = "Config List", flag = "selectedcfg", options = ConfigManager:RefreshConfigList(), max = 1, callback = function() end})
+local cfglist = Config:dropdown({name = "Config List", flag = "selectedcfg", options = library.ConfigManager:RefreshConfigList(), max = 1, callback = function() end})
 
 Config:button({name = "Create Config", callback = function()
     local name = library.flags["cfgname"]
-    local success, message = ConfigManager:CreateConfig(name)
+    local success, message = library.ConfigManager:CreateConfig(name)
     if success then
-        cfglist:setoptions(ConfigManager:RefreshConfigList())
+        cfglist:setoptions(library.ConfigManager:RefreshConfigList())
         cfglist:set(name)
         library:Notify({
             text = "Created config",
             time = 3,
             highlights = {tostring(name)}
         })
-        local success2, message2 = ConfigManager:SaveConfig(name)
+        local success2, message2 = library.ConfigManager:SaveConfig(name)
         if success2 then
-            cfglist:setoptions(ConfigManager:RefreshConfigList())
+            cfglist:setoptions(library.ConfigManager:RefreshConfigList())
             cfglist:set(name)
             library:Notify({
                 text = "Saved config",
@@ -46,9 +46,9 @@ Config:button({name = "Save Config", confirm = true, callback = function()
     if type(selected) == "table" then
         name = selected[1]
     end
-    local success, message = ConfigManager:SaveConfig(name)
+    local success, message = library.ConfigManager:SaveConfig(name)
     if success then
-        cfglist:setoptions(ConfigManager:RefreshConfigList())
+        cfglist:setoptions(library.ConfigManager:RefreshConfigList())
         cfglist:set(name)
         library:Notify({
             text = "Saved config",
@@ -78,7 +78,7 @@ Config:button({name = "Load Config", confirm = true, callback = function()
         })
         return
     end
-    local success, message = ConfigManager:LoadConfig(name)
+    local success, message = library.ConfigManager:LoadConfig(name)
     if success then
         library:Notify({
             text = "Loaded config",
@@ -108,9 +108,9 @@ Config:button({name = "Delete Config", confirm = true, callback = function()
         })
         return
     end
-    local success, message = ConfigManager:DeleteConfig(name)
+    local success, message = library.ConfigManager:DeleteConfig(name)
     if success then
-        cfglist:setoptions(ConfigManager:RefreshConfigList())
+        cfglist:setoptions(library.ConfigManager:RefreshConfigList())
         cfglist:set(nil)
         library:Notify({
             text = "Deleted config",
@@ -140,7 +140,7 @@ Config:button({name = "Set Autoload", callback = function()
         })
         return
     end
-    local success, message = ConfigManager:SetAutoload(name)
+    local success, message = library.ConfigManager:SetAutoload(name)
     if success then
         library:Notify({
             text = "Autoload set",
@@ -212,11 +212,11 @@ end)
 
 task.spawn(function()
     task.wait(1)
-    local autoloadName = ConfigManager:GetAutoload()
+    local autoloadName = library.ConfigManager:GetAutoload()
     if autoloadName then
-        local success, message = ConfigManager:LoadConfig(autoloadName)
+        local success, message = library.ConfigManager:LoadConfig(autoloadName)
         if success then
-            cfglist:setoptions(ConfigManager:RefreshConfigList())
+            cfglist:setoptions(library.ConfigManager:RefreshConfigList())
             cfglist:set(autoloadName)
             library:Notify({
                 text = "Autoloaded config",
