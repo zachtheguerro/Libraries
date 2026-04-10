@@ -209,26 +209,3 @@ library:connect(RunService.Heartbeat, function()
         library:setwatermark(text)
     end
 end)
-
-task.spawn(function()
-    task.wait(1)
-    local autoloadName = library.ConfigManager:GetAutoload()
-    if autoloadName then
-        local success, message = library.ConfigManager:LoadConfig(autoloadName)
-        if success then
-            cfglist:setoptions(library.ConfigManager:RefreshConfigList())
-            cfglist:set(autoloadName)
-            library:Notify({
-                text = "Autoloaded config",
-                highlights = {tostring(autoloadName)},
-                time = 3
-            })
-        else
-            library:Notify({
-                text = "Autoload failed",
-                highlights = {tostring(message)},
-                time = 3
-            })
-        end
-    end
-end)
