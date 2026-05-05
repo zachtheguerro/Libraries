@@ -1,279 +1,258 @@
--- Config -- 
-local Config = window:tab({name = "Config"})
+    -- Config --
+    do
+        local Config = window:tab({name = "Config"})
 
-local cfgname = Config:textbox({name = "Config Name", flag = "cfgname", callback = function() end})
+        cfgname = Config:textbox({name = "Config Name", flag = "cfgname", callback = function() end})
 
-local cfglist = Config:dropdown({name = "Config List", flag = "selectedcfg", options = library.ConfigManager:RefreshConfigList(), max = 1, callback = function() end})
+        cfglist = Config:dropdown({name = "Config List", flag = "selectedcfg", options = library.ConfigManager:RefreshConfigList(), max = 1, callback = function() end})
 
-local function getcfglist()
-    if cfglist and type(cfglist) == "table" and type(cfglist.setoptions) == "function" and type(cfglist.set) == "function" then
-        return cfglist
-    end
+        function getcfglist()
+            if cfglist and type(cfglist) == "table" and type(cfglist.setoptions) == "function" and type(cfglist.set) == "function" then
+                return cfglist
+            end
 
-    local item = library.items["selectedcfg"]
-    if item and type(item) == "table" and type(item.setoptions) == "function" and type(item.set) == "function" then
-        cfglist = item
-        return item
-    end
+            local item = library.items["selectedcfg"]
+            if item and type(item) == "table" and type(item.setoptions) == "function" and type(item.set) == "function" then
+                cfglist = item
+                return item
+            end
 
-    return nil
-end
-
-local function updatecfglist(selectedName)
-    local list = getcfglist()
-    if not list then
-        warn("Config List dropdown is nil or invalid")
-        return false
-    end
-
-    list:setoptions(library.ConfigManager:RefreshConfigList())
-
-    if selectedName ~= nil then
-        list:set(selectedName)
-    end
-
-    return true
-end
-
-local function getselectedcfg()
-    local selected = library.flags["selectedcfg"]
-    local name = selected
-
-    if type(selected) == "table" then
-        name = selected[1]
-    end
-
-    if not name or name == "" then
-        return nil
-    end
-
-    return name
-end
-
-task.defer(function()
-    updatecfglist()
-end)
-
-Config:button({name = "Create Config", callback = function()
-    local name = library.flags["cfgname"]
-
-    local success, message = library.ConfigManager:CreateConfig(name)
-    if success then
-        updatecfglist(name)
-
-        library:Notify({
-            text = "Created config",
-            time = 3,
-            highlights = {tostring(name)}
-        })
-
-        local success2, message2 = library.ConfigManager:SaveConfig(name)
-        if success2 then
-            updatecfglist(name)
-
-            library:Notify({
-                text = "Saved config",
-                time = 3,
-                highlights = {tostring(name)}
-            })
-        else
-            library:Notify({
-                text = "Save failed",
-                time = 3,
-                highlights = {tostring(message2)}
-            })
-        end
-    else
-        library:Notify({
-            text = "Create failed",
-            time = 3,
-            highlights = {tostring(message)}
-        })
-    end
-end})
-
-Config:button({
-    name = "Save Config",
-    confirm = true,
-    callback = function()
-        local name = getselectedcfg()
-
-        if not name then
-            library:Notify({
-                text = "Save failed",
-                time = 3,
-                highlights = {"no config selected"}
-            })
-            return
+            return nil
         end
 
-        local success, message = library.ConfigManager:SaveConfig(name)
-        if success then
-            updatecfglist(name)
+        function updatecfglist(selectedName)
+            local list = getcfglist()
+            if not list then
+                warn("Config List dropdown is nil or invalid")
+                return false
+            end
 
-            library:Notify({
-                text = "Saved config",
-                time = 3,
-                highlights = {tostring(name)}
-            })
-        else
-            library:Notify({
-                text = "Save failed",
-                time = 3,
-                highlights = {tostring(message)}
-            })
+            list:setoptions(library.ConfigManager:RefreshConfigList())
+
+            if selectedName ~= nil then
+                list:set(selectedName)
+            end
+
+            return true
         end
+
+        function getselectedcfg()
+            local selected = library.flags["selectedcfg"]
+            local name = selected
+
+            if type(selected) == "table" then
+                name = selected[1]
+            end
+
+            if not name or name == "" then
+                return nil
+            end
+
+            return name
+        end
+
+        task.defer(function()
+            updatecfglist()
+        end)
+
+        Config:button({name = "Create", callback = function()
+            local name = library.flags["cfgname"]
+
+            local success, message = library.ConfigManager:CreateConfig(name)
+            if success then
+                updatecfglist(name)
+
+                library:Notify({
+                    text = "Created config",
+                    time = 3,
+                    highlights = {tostring(name)}
+                })
+            else
+                library:Notify({
+                    text = "Create failed",
+                    time = 3,
+                    highlights = {tostring(message)}
+                })
+            end
+        end})
+
+        Config:button({name = "Save", confirm = true, callback = function()
+            local name = getselectedcfg()
+
+            if not name then
+                library:Notify({
+                    text = "Save failed",
+                    time = 3,
+                    highlights = {"no config selected"}
+                })
+                return
+            end
+
+            local success, message = library.ConfigManager:SaveConfig(name)
+            if success then
+                updatecfglist(name)
+
+                library:Notify({
+                    text = "Saved config",
+                    time = 3,
+                    highlights = {tostring(name)}
+                })
+            else
+                library:Notify({
+                    text = "Save failed",
+                    time = 3,
+                    highlights = {tostring(message)}
+                })
+            end
+        end})
+
+        Config:button({name = "Load Config", confirm = true, callback = function()
+            local name = getselectedcfg()
+
+            if not name then
+                library:Notify({
+                    text = "Load failed",
+                    time = 3,
+                    highlights = {"no config selected"}
+                })
+                return
+            end
+
+            local success, message = library.ConfigManager:LoadConfig(name)
+            if success then
+                updatecfglist(name)
+
+                library:Notify({
+                    text = "Loaded config",
+                    time = 3,
+                    highlights = {tostring(name)}
+                })
+            else
+                library:Notify({
+                    text = "Load failed",
+                    time = 3,
+                    highlights = {tostring(message)}
+                })
+            end
+        end})
+
+        Config:button({name = "Delete", confirm = true, callback = function()
+            local name = getselectedcfg()
+
+            if not name then
+                library:Notify({
+                    text = "Delete failed",
+                    time = 3,
+                    highlights = {"no config selected"}
+                })
+                return
+            end
+
+            local success, message = library.ConfigManager:DeleteConfig(name)
+            if success then
+                updatecfglist(nil)
+
+                library:Notify({
+                    text = "Deleted config",
+                    time = 3,
+                    highlights = {tostring(name)}
+                })
+            else
+                library:Notify({
+                    text = "Delete failed",
+                    time = 3,
+                    highlights = {tostring(message)}
+                })
+            end
+        end})
+
+        Config:button({name = "Set Autoload", callback = function()
+            local name = getselectedcfg()
+
+            if not name then
+                library:Notify({
+                    text = "Autoload failed",
+                    time = 3,
+                    highlights = {"no config selected"}
+                })
+                return
+            end
+
+            local success, message = library.ConfigManager:SetAutoload(name)
+            if success then
+                library:Notify({
+                    text = "Autoload set",
+                    time = 3,
+                    highlights = {tostring(name)}
+                })
+            else
+                library:Notify({
+                    text = "Autoload failed",
+                    time = 3,
+                    highlights = {tostring(message)}
+                })
+            end
+        end})
+
+        Config:label({name = "Accent Color"}):colorpicker({color = library.accent, flag = "accent", callback = function(Value)
+            library:updateColorGroup({value = Value, store = "accent", accentMode = true})
+        end})
+
+        Config:label({name = "Background Color"}):colorpicker({color = library.backgroundcolor, flag = "backgroundcolor", callback = function(Value)
+            library:updateColorGroup({value = Value, store = "backgroundcolor", propsAttribute = "BackgroundProps"})
+        end})
+
+        Config:label({name = "Content Color"}):colorpicker({color = library.contentcolor, flag = "contentcolor", callback = function(Value)
+            library:updateColorGroup({value = Value, store = "contentcolor", propsAttribute = "ContentProps"})
+        end})
+
+        Config:label({name = "Button Color"}):colorpicker({color = library.buttoncolor, flag = "buttoncolor", callback = function(Value)
+            library:updateColorGroup({value = Value, store = "buttoncolor", propsAttribute = "Buttons", disabledAttribute = "ButtonDisabled"})
+        end})
+
+        local StrokeLabel = Config:label({name = "Stroke Color"})
+
+        StrokeLabel:colorpicker({color = library.stroke, flag = "stroke", callback = function(Value)
+            library:updateColorGroup({value = Value, store = "stroke", propsAttribute = "StrokeProps", disabledAttribute = "StrokeDisabled"})
+        end})
+
+        StrokeLabel:colorpicker({color = library.stroke2, flag = "stroke2", callback = function(Value)
+            library:updateColorGroup({value = Value, store = "stroke2", propsAttribute = "StrokeProps2", disabledAttribute = "Stroke2Disabled"})
+        end})
+
+        Config:label({name = "Text Color"}):colorpicker({color = library.textcolor, flag = "textcolor", callback = function(Value)
+            library:updateColorGroup({value = Value, store = "textcolor", propsAttribute = "TextProps", disabledAttribute = "TextDisabled"})
+        end})
+
+        Config:label({name = "Misc's Color"}):colorpicker({color = library.misccolor, flag = "misccolor", callback = function(Value)
+            library:updateColorGroup({value = Value, store = "misccolor", propsAttribute = "MiscProps"})
+        end})
+
+        Config:label({name = "Show Gui"}):keybind({default = Enum.KeyCode.RightControl, state = true, mode = "Toggle", flag = "showgui", callback = function(Value)
+            library:toggle(Value)
+        end})
+
+        Config:toggle({name = "Show Watermark", flag = "showwatermark", state = false, callback = function(Value)
+            watermark.Visible = Value
+        end})
+
+        Config:toggle({name = "Show Keybind List", state = false, flag = "showkeybinds", callback = function(Value)
+            KeybindContainer.Visible = Value
+        end})
+
+        Config:button({name = "Unload", confirm = true, callback = function()
+            library:Unload()
+        end})
+
+        local last = ""
+        library:connect(game:GetService("RunService").Heartbeat, function()
+            local time = os.date("%H:%M:%S")
+            local ping = math.floor(game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValue())
+            local text = string.format("Boo | beta | %d ms | %s", ping, time)
+
+            if text ~= last then
+                last = text
+                library:setwatermark(text)
+            end
+        end)
     end
-})
-
-Config:button({name = "Load Config", confirm = true, callback = function()
-    local name = getselectedcfg()
-
-    if not name then
-        library:Notify({
-            text = "Load failed",
-            time = 3,
-            highlights = {"no config selected"}
-        })
-        return
-    end
-
-    local success, message = library.ConfigManager:LoadConfig(name)
-    if success then
-        updatecfglist(name)
-
-        library:Notify({
-            text = "Loaded config",
-            time = 3,
-            highlights = {tostring(name)}
-        })
-    else
-        library:Notify({
-            text = "Load failed",
-            time = 3,
-            highlights = {tostring(message)}
-        })
-    end
-end})
-
-Config:button({name = "Delete Config", confirm = true, callback = function()
-    local name = getselectedcfg()
-
-    if not name then
-        library:Notify({
-            text = "Delete failed",
-            time = 3,
-            highlights = {"no config selected"}
-        })
-        return
-    end
-
-    local success, message = library.ConfigManager:DeleteConfig(name)
-    if success then
-        updatecfglist(nil)
-
-        library:Notify({
-            text = "Deleted config",
-            time = 3,
-            highlights = {tostring(name)}
-        })
-    else
-        library:Notify({
-            text = "Delete failed",
-            time = 3,
-            highlights = {tostring(message)}
-        })
-    end
-end})
-
-Config:button({name = "Set Autoload", callback = function()
-    local name = getselectedcfg()
-
-    if not name then
-        library:Notify({
-            text = "Autoload failed",
-            time = 3,
-            highlights = {"no config selected"}
-        })
-        return
-    end
-
-    local success, message = library.ConfigManager:SetAutoload(name)
-    if success then
-        library:Notify({
-            text = "Autoload set",
-            time = 3,
-            highlights = {tostring(name)}
-        })
-    else
-        library:Notify({
-            text = "Autoload failed",
-            time = 3,
-            highlights = {tostring(message)}
-        })
-    end
-end})
-
-Config:label({name = "Accent Color"}):colorpicker({color = library.accent, callback = function(Value)
-    library:updateColorGroup({value = Value, store = "accent", accentMode = true})
-end})
-
-Config:label({name = "Background Color"}):colorpicker({color = library.backgroundcolor, callback = function(Value)
-    library:updateColorGroup({value = Value, store = "backgroundcolor", propsAttribute = "BackgroundProps"})
-end})
-
-Config:label({name = "Content Color"}):colorpicker({color = library.contentcolor, callback = function(Value)
-    library:updateColorGroup({value = Value, store = "contentcolor", propsAttribute = "ContentProps"})
-end})
-
-Config:label({name = "Button Color"}):colorpicker({color = library.buttoncolor, callback = function(Value)
-    library:updateColorGroup({value = Value, store = "buttoncolor", propsAttribute = "Buttons", disabledAttribute = "ButtonDisabled"})
-end})
-
-local StrokeLabel = Config:label({name = "Stroke Color"})
-
-StrokeLabel:colorpicker({color = library.stroke, callback = function(Value)
-    library:updateColorGroup({value = Value, store = "stroke", propsAttribute = "StrokeProps", disabledAttribute = "StrokeDisabled"})
-end})
-
-StrokeLabel:colorpicker({color = library.stroke2, callback = function(Value)
-    library:updateColorGroup({value = Value, store = "stroke2", propsAttribute = "StrokeProps2", disabledAttribute = "Stroke2Disabled"})
-end})
-
-Config:label({name = "Text Color"}):colorpicker({color = library.textcolor, callback = function(Value)
-    library:updateColorGroup({value = Value, store = "textcolor", propsAttribute = "TextProps", disabledAttribute = "TextDisabled"})
-end})
-
-Config:label({name = "Misc's Color"}):colorpicker({color = library.misccolor, callback = function(Value)
-    library:updateColorGroup({value = Value, store = "misccolor", propsAttribute = "MiscProps"})
-end})
-
-Config:label({name = "Show Gui"}):keybind({default = Enum.KeyCode.RightControl, state = true, mode = "Toggle", callback = function(Value)
-    library:toggle(Value)
-end})
-
-Config:toggle({name = "Show Watermark", state = false, callback = function(Value)
-    watermark.Visible = Value
-end})
-
-Config:toggle({name = "Show Keybind List", state = false, callback = function(Value)
-    KeybindContainer.Visible = Value
-end})
-
-Config:button({name = "Unload", confirm = true, callback = function()
-    library:Unload()
-end})
-
-local last = ""
-library:connect(game:GetService("RunService").Heartbeat, function()
-    local time = os.date("%H:%M:%S")
-    local ping = math.floor(game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValue())
-    local text = string.format("Boo | beta | %d ms | %s", ping, time)
-
-    if text ~= last then
-        last = text
-        library:setwatermark(text)
-    end
-end)
-
-library.loaded = true
