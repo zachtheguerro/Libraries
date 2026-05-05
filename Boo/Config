@@ -106,7 +106,7 @@
             end
         end})
 
-        Config:button({name = "Load Config", confirm = true, callback = function()
+        Config:button({name = "Load", confirm = true, callback = function()
             local name = getselectedcfg()
 
             if not name then
